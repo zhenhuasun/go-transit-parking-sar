@@ -1,7 +1,5 @@
 # Project Prompt (portable version)
 
----
-
 I am a data scientist in the marketing department at Metrolinx, responsible for customer insight, fare strategy and ridership forecasting. I want to do a study: **use satellite radar data to reconstruct GO train station parking-lot usage for 2018–2026**, because GO only publishes parking capacity — no occupancy, no historical record, and no sensors in its outdoor lots.
 
 **Core idea**
