@@ -49,6 +49,58 @@ cross-check): **71 rail stations, 57 with free parking, 14 with none;
 96 lots. Bloomington and Centennial are 100% garage — VV cannot measure
 them. See `network-inventory/`.
 
+## Per-station charts
+
+Every acquisition plotted — not annual means. Each chart shows one
+station's lots on shared axes, so the lots can be compared directly.
+
+**How to read them:** each point is one acquisition's mean VV for that
+lot. Solid circles are summer scenes (June–August), connected in date
+order; open squares are the Sep–Nov 2026 autumn check, plotted as a
+separate series in the shaded band on the right — autumn is not connected
+to summer and is not part of the summer recovery index. Dotted horizontal
+lines mark each lot's 2019 summer mean. The black dashed line is the
+space-weighted station aggregate (mean of linear power, weights =
+spaces). Long lines joining one summer to the next cross the Sep–May gap,
+where there are no scenes by design — they are not measurements.
+
+### Oakville GO — Main (2,712 spaces) vs South (291)
+
+![Oakville GO — per-scene mean VV, every acquisition 2018–2026](quick-vv-check-2018-2026/vv-per-scene-station-oakville.png)
+
+Main sits almost flat at about −10.2 dB from 2023 through 2026, hugging
+its 2019 dotted line — the station's demand story is Main's story, and
+the aggregate follows it because Main holds ~90% of the weight. South
+tracks below Main until 2026, then jumps far above everything else in the
+chart: summer 2026 scenes reach −5.3 dB. That is the April 2026
+construction compound, not demand — which is why South 2026 is excluded
+from the recovery index. Its autumn squares stay bright too (−8.35 dB
+mean), so the lot had not returned to normal by 2 Nov 2026.
+
+### Clarkson GO — Main (1,274 spaces) vs North (627)
+
+![Clarkson GO — per-scene mean VV, every acquisition 2018–2026](quick-vv-check-2018-2026/vv-per-scene-station-clarkson.png)
+
+The two lots run about 2 dB apart for the whole period — North brighter
+(~−9.7 dB) than Main (~−11.6 dB). That is a level difference, not a trend
+difference: both lots fall together in 2020–2021 and recover together by
+2023–2024, and both sit at their 2019 levels in 2026. The gap is a
+property of the lots (surface, surroundings, polygon), so compare each lot
+against its own 2019 line, not against the other lot. Note the aggregate's
+North weight is provisional — North's boundary is unverified at
+52.3 m²/space.
+
+### Bronte GO — Main (1,824 spaces) vs South (1,149)
+
+![Bronte GO — per-scene mean VV, every acquisition 2018–2026](quick-vv-check-2018-2026/vv-per-scene-station-bronte.png)
+
+The cleanest case in the pilot: the two lots track each other closely,
+both around −10.5 to −10.7 dB, falling together in 2020–2021 and
+recovering together, with the aggregate sitting between them. Neither lot
+shows a 2026 anomaly, and the autumn squares land in the same band as the
+summers. When two independent lots at one station move together like
+this, the shared signal is demand, not lot-specific noise.
+
 ## Repository layout
 
 ```
@@ -83,8 +135,8 @@ them. See `network-inventory/`.
     ├── network-inventory.md / stations.csv (71) / lots.csv (107 rows)
     ├── inventory.py            # Reproduces stations.csv and lots.csv
     └── scripts/                # Intermediate scrape / parse / merge scripts
-├── docs/
-│   └── session-prompt-zh.md    # Portable Chinese project prompt (2026-11-10)
+└── docs/
+    └── session-prompt-zh.md    # Portable Chinese project prompt (2026-11-10)
 ```
 
 Folder names such as `quick-vv-check-2018-2026` are kept as originally
