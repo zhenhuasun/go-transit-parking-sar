@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>自己画 Polygon — GO 停车场 2018–2026</title>
+<title>Draw Your Own Polygons — GO Parking Lots 2018–2026</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
 <style>
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;color:#222}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#222}
   header{padding:14px 16px 10px;background:#e8f5e9;border-bottom:2px solid #00c853}
   header h1{font-size:18px;margin:0 0 6px}
   header p, header li{margin:4px 0;font-size:14px;line-height:1.55}
@@ -27,43 +27,43 @@
 </head>
 <body>
 <header>
-  <h1>自己画 Polygon — GO 停车场（2018–2026）</h1>
-  <p>可以，你直接在这张卫星图上改，不用装软件、不用账号。6 个草稿框已经在图上了。</p>
+  <h1>Draw Your Own Polygons — GO Parking Lots (2018–2026)</h1>
+  <p>You can edit directly on this satellite map — no software to install, no account needed. The 6 draft boxes are already on the map.</p>
   <ol>
-    <li><b>改现有框：</b>点地图左上角的 ✏️ 编辑按钮，再点一个框，拖它的白色角点；拖框中间可以整体移动。改完点左上角的 Save。</li>
-    <li><b>画新框：</b>点左上角的多边形按钮，沿着停车场边缘逐个点，最后点第一个点闭合；会弹出框让你起名，例如 <i>Oakville GO — South Lot</i>。</li>
-    <li><b>删框：</b>点左上角的 🗑️ 删除按钮，再点要删的框，点 Save。</li>
-    <li><b>导出：</b>改完点下面「导出 GeoJSON」，再点「复制」或「下载 .geojson」，把文件 / 文字发回给我，我就按你画的版本跑 SARpanel。</li>
+    <li><b>Edit a box:</b> click the ✏️ Edit button at the top left of the map, then click a box and drag its white corner points; drag the middle of the box to move it as a whole. Click Save at the top left when done.</li>
+    <li><b>Draw a new box:</b> click the polygon button at the top left, click along the edge of the parking lot, and click the first point again to close it; a box will pop up asking for a name, e.g. <i>Oakville GO — South Lot</i>.</li>
+    <li><b>Delete a box:</b> click the 🗑️ Delete button at the top left, then click the box to delete, and click Save.</li>
+    <li><b>Export:</b> when done, click “Export GeoJSON” below, then “Copy” or “Download .geojson”, and send the file / text back to me — I will run SARpanel on the version you drew.</li>
   </ol>
-  <p>你的修改会自动存在这个浏览器里（localStorage），下次打开同一页面还在。手机上也能画，但角点很小，<b>建议电脑上精修，手机上只做粗略检查</b>。先放大到最大（z 18–19）再描边，只盖沥青停车场，别盖轨道、站房、道路和树。</p>
+  <p>Your edits are saved automatically in this browser (localStorage) and will still be here next time you open this page. You can also draw on a phone, but the corner points are small — <b>do fine editing on a computer and use the phone for rough checks only</b>. Zoom to the maximum (z 18–19) before tracing, and cover only asphalt parking lots, not tracks, station buildings, roads or trees.</p>
 </header>
 <div id="map"></div>
 <div class="btns">
   <button onclick="fly(43.45612,-79.68378,17)">Oakville GO</button>
   <button onclick="fly(43.513,-79.633,17)">Clarkson GO</button>
   <button onclick="fly(43.4175,-79.723,17)">Bronte GO</button>
-  <button onclick="fly(43.465,-79.68,11)">三站全景</button>
-  <button class="primary" onclick="updateExport()">导出 GeoJSON</button>
-  <button onclick="copyGeoJSON()">复制 GeoJSON</button>
-  <button onclick="downloadGeoJSON()">下载 .geojson</button>
-  <button onclick="resetDraft()">恢复草稿</button>
+  <button onclick="fly(43.465,-79.68,11)">All three stations</button>
+  <button class="primary" onclick="updateExport()">Export GeoJSON</button>
+  <button onclick="copyGeoJSON()">Copy GeoJSON</button>
+  <button onclick="downloadGeoJSON()">Download .geojson</button>
+  <button onclick="resetDraft()">Restore draft</button>
 </div>
-<textarea id="out" readonly placeholder="点「导出 GeoJSON」后，这里会出现你画好的 GeoJSON。"></textarea>
-<p class="note">发回给我的方式任选其一：① 下载的 .geojson 文件直接发给我；② 点「复制 GeoJSON」后粘贴发给我；③ 不用发文件，直接在聊天里告诉我改了哪几个框（例如 “Oakville South 移到轨道南边了”），我按你说的改。停车楼不用画，直接排除。</p>
+<textarea id="out" readonly placeholder="After clicking “Export GeoJSON”, the GeoJSON you drew will appear here."></textarea>
+<p class="note">Send it back to me any one of these ways: 1) send the downloaded .geojson file directly; 2) click “Copy GeoJSON” and paste it to me; 3) no file needed — just tell me in chat which boxes you changed (e.g. “Oakville South moved south of the tracks”) and I will change them as you say. Do not draw the parking garage — it is excluded.</p>
 <table>
-<tr><th>草稿框</th><th>状态</th></tr>
-<tr><td>Oakville GO — Main Lot</td><td>草稿，待确认 / 可能拆成三块</td></tr>
-<tr><td>Oakville GO — South Lot</td><td style="color:#b00020;font-weight:600">位置待核对，geocoder 坐标与 Main Lot 重叠</td></tr>
-<tr><td>Clarkson GO — Main Lot / North Lot</td><td>草稿，North 可能不止一块</td></tr>
-<tr><td>Bronte GO — Main / East Lot</td><td>草稿，U 形，需抠掉中间建筑</td></tr>
-<tr><td>Bronte GO — South Lot</td><td>草稿</td></tr>
+<tr><th>Draft box</th><th>Status</th></tr>
+<tr><td>Oakville GO — Main Lot</td><td>Draft, to confirm / may split into three</td></tr>
+<tr><td>Oakville GO — South Lot</td><td style="color:#b00020;font-weight:600">Location to verify, geocoder coordinates overlap Main Lot</td></tr>
+<tr><td>Clarkson GO — Main Lot / North Lot</td><td>Draft, North may be more than one lot</td></tr>
+<tr><td>Bronte GO — Main / East Lot</td><td>Draft, U-shaped, cut out the buildings in the middle</td></tr>
+<tr><td>Bronte GO — South Lot</td><td>Draft</td></tr>
 </table>
 <script>
 var map = L.map('map').setView([43.465,-79.68], 11);
 var sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, attribution:'Esri World Imagery'});
 var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'© OpenStreetMap'});
 sat.addTo(map);
-L.control.layers({"卫星图":sat,"街道图":osm}).addTo(map);
+L.control.layers({"Satellite":sat,"Streets":osm}).addTo(map);
 function fly(lat,lon,z){ map.flyTo([lat,lon], z); }
 var DRAFT = [
  {id:'oakville-main', name:'Oakville GO — Main Lot', spaces:2712, color:'#00c853',
@@ -110,8 +110,8 @@ function loadSaved(){
       onEachFeature:function(f, layer){
         layer.feature = f;
         var p = f.properties || {};
-        layer.bindPopup('<b>'+(p.name||'未命名')+'</b><br>'+(p.note||''));
-        layer.bindTooltip(p.name||'未命名');
+        layer.bindPopup('<b>'+(p.name||'Unnamed')+'</b><br>'+(p.note||''));
+        layer.bindTooltip(p.name||'Unnamed');
       }}).addTo(drawnItems);
     return true;
   }catch(e){ return false; }
@@ -125,10 +125,10 @@ var drawControl = new L.Control.Draw({
 map.addControl(drawControl);
 map.on(L.Draw.Event.CREATED, function(e){
   var layer = e.layer;
-  var name = prompt('这个新 polygon 是哪个 lot？例如：Oakville GO — South Lot', '新 Lot');
-  layer.feature = {type:'Feature', properties:{id:'user-'+Date.now(), name:name||'新 Lot', status:'user-drawn', color:'#00c853'}};
-  layer.bindPopup('<b>'+(name||'新 Lot')+'</b><br>你画的');
-  layer.bindTooltip(name||'新 Lot');
+  var name = prompt('Which lot is this new polygon? E.g. Oakville GO — South Lot', 'New Lot');
+  layer.feature = {type:'Feature', properties:{id:'user-'+Date.now(), name:name||'New Lot', status:'user-drawn', color:'#00c853'}};
+  layer.bindPopup('<b>'+(name||'New Lot')+'</b><br>You drew this');
+  layer.bindTooltip(name||'New Lot');
   drawnItems.addLayer(layer);
   updateExport();
 });
@@ -148,8 +148,8 @@ function copyGeoJSON(){
   updateExport();
   var t = document.getElementById('out');
   t.select();
-  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t.value).then(function(){ alert('已复制 GeoJSON，粘贴发给我就行。'); }); }
-  else { document.execCommand('copy'); alert('已复制 GeoJSON，粘贴发给我就行。'); }
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t.value).then(function(){ alert('GeoJSON copied — just paste it to me.'); }); }
+  else { document.execCommand('copy'); alert('GeoJSON copied — just paste it to me.'); }
 }
 function downloadGeoJSON(){
   updateExport();
@@ -158,7 +158,7 @@ function downloadGeoJSON(){
   a.download = 'go-parking-lots-user.geojson'; a.click();
 }
 function resetDraft(){
-  if(confirm('恢复到我给你的 6 个草稿框？你自己画的修改会丢。')){ localStorage.removeItem('go-parking-polygons-v1'); loadDraft(); }
+  if(confirm('Restore the 6 draft boxes I gave you? Your own edits will be lost.')){ localStorage.removeItem('go-parking-polygons-v1'); loadDraft(); }
 }
 updateExport();
 </script>

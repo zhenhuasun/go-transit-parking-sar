@@ -136,7 +136,7 @@ this, the shared signal is demand, not lot-specific noise.
     ├── inventory.py            # Reproduces stations.csv and lots.csv
     └── scripts/                # Intermediate scrape / parse / merge scripts
 └── docs/
-    └── session-prompt-zh.md    # Portable Chinese project prompt (2026-11-10)
+    └── session-prompt.md        # Portable project prompt (2026-11-10), translated from Chinese
 ```
 
 Folder names such as `quick-vv-check-2018-2026` are kept as originally
