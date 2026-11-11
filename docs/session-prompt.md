@@ -1,12 +1,5 @@
 # Project Prompt (portable version)
 
-> Translated from the Chinese version compiled on 2026-11-10, reproduced
-> here in English without changing the substance. Note: written before the
-> 2018–2026 expanded run (2026-11-11) and the Sep–Nov 2026 check, so step 1
-> under "Next steps" is now done and the remaining steps are still pending
-> in their original order. Copy it to ask another AI, send it to a
-> colleague, or use it as the draft for a project proposal.
-
 ---
 
 I am a data scientist in the marketing department at Metrolinx, responsible for customer insight, fare strategy and ridership forecasting. I want to do a study: **use satellite radar data to reconstruct GO train station parking-lot usage for 2018–2026**, because GO only publishes parking capacity — no occupancy, no historical record, and no sensors in its outdoor lots.
