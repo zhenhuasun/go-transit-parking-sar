@@ -1,0 +1,32 @@
+Loaded 6 lots from /home/hatch/workspace/go-parking-sarpanel/polygons-user.geojson
+[2026-Sep-Nov] oakville-main: 10 slice items
+[2026-Sep-Nov] oakville-south: 10 slice items
+[2026-Sep-Nov] clarkson-main: 10 slice items
+[2026-Sep-Nov] clarkson-north: 10 slice items
+[2026-Sep-Nov] bronte-main: 10 slice items
+[2026-Sep-Nov] bronte-south: 10 slice items
+Distinct acquisitions (date x orbit x rel_orbit x platform): 10
+  acq ('2026-09-03', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-09-08', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-09-15', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-09-20', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-09-27', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-10-02', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-10-09', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-10-14', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-10-21', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-11-02', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+Distinct slice items to read: 10
+UNIT CHECK scene S1D_IW_GRDH_1SDV_20260903T230748_20260903T230813_004420_0082F4_rtc 2026-09-03: n=949124 min=0.0010 p5=0.0092 median=0.1120 p95=0.5238 max=260.31
+UNIT CHECK: values are LINEAR gamma naught (power ratio). Conversion: VV_dB = 10*log10(linear), linear clipped at 1e-6.
+  wrote 6 rows (total done 6)
+  wrote 6 rows (total done 12)
+  wrote 6 rows (total done 18)
+  wrote 6 rows (total done 24)
+  wrote 6 rows (total done 30)
+  wrote 6 rows (total done 36)
+  wrote 6 rows (total done 42)
+  wrote 6 rows (total done 48)
+  wrote 6 rows (total done 54)
+  wrote 6 rows (total done 60)
+Done. CSV rows total: 60

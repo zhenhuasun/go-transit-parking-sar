@@ -1,0 +1,12 @@
+# Direct dependencies, as used by the scripts in this repo (Python 3.12).
+# Planetary Computer signs public COGs itself; no user credentials needed
+# for the quick VV check. SARpanel (formal chain) needs ESA SNAP and an
+# Earthdata token set as an environment variable — see README.
+planetary-computer==1.0.0
+pystac-client==0.9.1
+rasterio==1.5.2
+shapely==2.2.0
+matplotlib==3.11.2
+pandas==3.1.1
+numpy==2.5.4
+osmium==4.3.2

@@ -1,0 +1,27 @@
+name: go_parking_trial_2019_summer
+
+aoi:
+  # User-drawn polygons, 6 outdoor lots, garages excluded.
+  # GeoJSON in EPSG:4326 / CRS84, one feature per lot.
+  source: "./polygons-user.geojson"
+  id_column: "id"
+
+search:
+  start_date: "2019-06-01"
+  end_date: "2019-08-31"
+  beam_mode: IW
+  polarization: "VV+VH"
+
+processing:
+  product_type: GRD
+  target_crs: "EPSG:32617"  # UTM 17N - Oakville / Mississauga, lon ~-79.6
+  target_spacing_m: 10.0
+  polarizations: ["VV", "VH"]
+  terrain_flattening: true
+  speckle_filter: null
+  subset_to_aoi: true
+  subset_buffer_m: 500
+
+output:
+  root: "./runs/go_parking_trial_2019_summer"
+n_shards: 1

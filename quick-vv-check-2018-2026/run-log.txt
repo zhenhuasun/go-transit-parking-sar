@@ -1,0 +1,462 @@
+Loaded 6 lots from /home/hatch/workspace/go-parking-sarpanel/polygons-user.geojson
+[2018] oakville-main: 14 slice items
+[2018] oakville-south: 14 slice items
+[2018] clarkson-main: 14 slice items
+[2018] clarkson-north: 14 slice items
+[2018] bronte-main: 14 slice items
+[2018] bronte-south: 14 slice items
+[2019] oakville-main: 15 slice items
+[2019] oakville-south: 15 slice items
+[2019] clarkson-main: 15 slice items
+[2019] clarkson-north: 15 slice items
+[2019] bronte-main: 15 slice items
+[2019] bronte-south: 15 slice items
+[2020] oakville-main: 14 slice items
+[2020] oakville-south: 14 slice items
+[2020] clarkson-main: 14 slice items
+[2020] clarkson-north: 14 slice items
+[2020] bronte-main: 14 slice items
+[2020] bronte-south: 14 slice items
+[2021] oakville-main: 12 slice items
+[2021] oakville-south: 12 slice items
+[2021] clarkson-main: 12 slice items
+[2021] clarkson-north: 12 slice items
+[2021] bronte-main: 12 slice items
+[2021] bronte-south: 12 slice items
+[2022] oakville-main: 8 slice items
+[2022] oakville-south: 8 slice items
+[2022] clarkson-main: 8 slice items
+[2022] clarkson-north: 8 slice items
+[2022] bronte-main: 8 slice items
+[2022] bronte-south: 8 slice items
+[2023] oakville-main: 11 slice items
+[2023] oakville-south: 11 slice items
+[2023] clarkson-main: 11 slice items
+[2023] clarkson-north: 11 slice items
+[2023] bronte-main: 11 slice items
+[2023] bronte-south: 11 slice items
+[2024] oakville-main: 13 slice items
+[2024] oakville-south: 13 slice items
+[2024] clarkson-main: 13 slice items
+[2024] clarkson-north: 13 slice items
+[2024] bronte-main: 13 slice items
+[2024] bronte-south: 13 slice items
+[2025] oakville-main: 12 slice items
+[2025] oakville-south: 12 slice items
+[2025] clarkson-main: 12 slice items
+[2025] clarkson-north: 12 slice items
+[2025] bronte-main: 12 slice items
+[2025] bronte-south: 12 slice items
+[2026] oakville-main: 15 slice items
+[2026] oakville-south: 15 slice items
+[2026] clarkson-main: 15 slice items
+[2026] clarkson-north: 15 slice items
+[2026] bronte-main: 15 slice items
+[2026] bronte-south: 15 slice items
+Distinct acquisitions (date x orbit x rel_orbit x platform): 114
+  acq ('2018-06-03', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-06-15', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-06-22', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-06-27', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-04', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-09', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-16', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-21', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-28', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-02', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-09', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-14', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-21', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-26', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-05', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-10', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-17', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-22', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-29', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-04', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-11', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-16', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-23', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-28', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-04', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-09', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-16', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-21', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-28', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-06-04', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-06-11', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-06-23', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-06-28', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-05', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-10', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-17', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-22', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-29', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-03', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-10', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-15', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-22', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-27', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-06-06', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-06-11', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-06-18', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-06-23', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-07-05', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-07-12', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-07-17', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-05', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-10', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-17', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-22', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-29', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-06-25', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-06-30', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-07-19', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-07-24', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-08-05', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-08-12', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-08-24', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-08-29', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-06-01', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-06-08', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-06-13', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-06-20', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-07-07', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-07-14', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-07-19', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-08-07', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-08-12', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-08-19', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-08-24', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-02', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-07', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-14', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-19', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-26', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-07-01', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-07-13', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-07-20', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-01', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-06', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-13', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-18', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-30', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-02', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-09', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-14', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-21', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-26', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-07-08', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-07-27', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-01', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-08', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-13', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-20', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-25', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-04', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-09', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-16', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-21', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-28', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-28', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-07-10', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-07-17', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-07-22', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-07-29', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-03', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-10', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-15', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-22', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-27', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+Distinct slice items to read: 114
+UNIT CHECK scene S1A_IW_GRDH_1SDV_20180603T231614_20180603T231639_022199_0266C0_rtc 2018-06-03: n=949124 min=0.0005 p5=0.0037 median=0.1168 p95=0.5640 max=549.65
+UNIT CHECK: values are LINEAR gamma naught (power ratio). Conversion: VV_dB = 10*log10(linear), linear clipped at 1e-6.
+  wrote 6 rows (total done 6)
+  wrote 6 rows (total done 12)
+  wrote 6 rows (total done 18)
+  wrote 6 rows (total done 24)
+  wrote 6 rows (total done 30)
+  wrote 6 rows (total done 36)
+  wrote 6 rows (total done 42)
+  wrote 6 rows (total done 48)
+  wrote 6 rows (total done 54)
+  wrote 6 rows (total done 60)
+  wrote 6 rows (total done 66)
+  wrote 6 rows (total done 72)
+  wrote 6 rows (total done 78)
+  wrote 6 rows (total done 84)
+  wrote 6 rows (total done 90)
+  wrote 6 rows (total done 96)
+  wrote 6 rows (total done 102)
+  wrote 6 rows (total done 108)
+  wrote 6 rows (total done 114)
+  wrote 6 rows (total done 120)
+  wrote 6 rows (total done 126)
+  wrote 6 rows (total done 132)
+  wrote 6 rows (total done 138)
+  wrote 6 rows (total done 144)
+  wrote 6 rows (total done 150)
+  wrote 6 rows (total done 156)
+  wrote 6 rows (total done 162)
+  wrote 6 rows (total done 168)
+  wrote 6 rows (total done 174)
+  wrote 6 rows (total done 180)
+  wrote 6 rows (total done 186)
+  wrote 6 rows (total done 192)
+  wrote 6 rows (total done 198)
+  wrote 6 rows (total done 204)
+  wrote 6 rows (total done 210)
+  wrote 6 rows (total done 216)
+  wrote 6 rows (total done 222)
+  wrote 6 rows (total done 228)
+  wrote 6 rows (total done 234)
+  wrote 6 rows (total done 240)
+  wrote 6 rows (total done 246)
+  wrote 6 rows (total done 252)
+  wrote 6 rows (total done 258)
+  wrote 6 rows (total done 264)
+  wrote 6 rows (total done 270)
+  wrote 6 rows (total done 276)
+  wrote 6 rows (total done 282)
+  wrote 6 rows (total done 288)
+  wrote 6 rows (total done 294)
+  wrote 6 rows (total done 300)
+  wrote 6 rows (total done 306)
+  wrote 6 rows (total done 312)
+  wrote 6 rows (total done 318)
+  wrote 6 rows (total done 324)
+  wrote 6 rows (total done 330)
+  wrote 6 rows (total done 336)
+  wrote 6 rows (total done 342)
+  wrote 6 rows (total done 348)
+  wrote 6 rows (total done 354)
+  wrote 6 rows (total done 360)
+  wrote 6 rows (total done 366)
+  wrote 6 rows (total done 372)
+  wrote 6 rows (total done 378)
+  wrote 6 rows (total done 384)
+  wrote 6 rows (total done 390)
+  wrote 6 rows (total done 396)
+  wrote 6 rows (total done 402)
+  wrote 6 rows (total done 408)
+  wrote 6 rows (total done 414)
+  wrote 6 rows (total done 420)
+  wrote 6 rows (total done 426)
+  wrote 6 rows (total done 432)
+  wrote 6 rows (total done 438)
+  wrote 6 rows (total done 444)
+  wrote 6 rows (total done 450)
+  wrote 6 rows (total done 456)
+  wrote 6 rows (total done 462)
+  wrote 6 rows (total done 468)
+  wrote 6 rows (total done 474)
+  wrote 6 rows (total done 480)
+  wrote 6 rows (total done 486)
+  wrote 6 rows (total done 492)
+  wrote 6 rows (total done 498)
+  wrote 6 rows (total done 504)
+  wrote 6 rows (total done 510)
+  wrote 6 rows (total done 516)
+  wrote 6 rows (total done 522)
+  wrote 6 rows (total done 528)
+  wrote 6 rows (total done 534)
+  wrote 6 rows (total done 540)
+  wrote 6 rows (total done 546)
+  wrote 6 rows (total done 552)
+  wrote 6 rows (total done 558)
+  wrote 6 rows (total done 564)
+  wrote 6 rows (total done 570)
+  wrote 6 rows (total done 576)
+  wrote 6 rows (total done 582)
+  wrote 6 rows (total done 588)
+  wrote 6 rows (total done 594)
+  wrote 6 rows (total done 600)
+  wrote 6 rows (total done 606)
+  wrote 6 rows (total done 612)
+  wrote 6 rows (total done 618)
+  wrote 6 rows (total done 624)
+Loaded 6 lots from /home/hatch/workspace/go-parking-sarpanel/polygons-user.geojson
+Resuming: 624 lot-scene rows already done
+[2018] oakville-main: 14 slice items
+[2018] oakville-south: 14 slice items
+[2018] clarkson-main: 14 slice items
+[2018] clarkson-north: 14 slice items
+[2018] bronte-main: 14 slice items
+[2018] bronte-south: 14 slice items
+[2019] oakville-main: 15 slice items
+[2019] oakville-south: 15 slice items
+[2019] clarkson-main: 15 slice items
+[2019] clarkson-north: 15 slice items
+[2019] bronte-main: 15 slice items
+[2019] bronte-south: 15 slice items
+[2020] oakville-main: 14 slice items
+[2020] oakville-south: 14 slice items
+[2020] clarkson-main: 14 slice items
+[2020] clarkson-north: 14 slice items
+[2020] bronte-main: 14 slice items
+[2020] bronte-south: 14 slice items
+[2021] oakville-main: 12 slice items
+[2021] oakville-south: 12 slice items
+[2021] clarkson-main: 12 slice items
+[2021] clarkson-north: 12 slice items
+[2021] bronte-main: 12 slice items
+[2021] bronte-south: 12 slice items
+[2022] oakville-main: 8 slice items
+[2022] oakville-south: 8 slice items
+[2022] clarkson-main: 8 slice items
+[2022] clarkson-north: 8 slice items
+[2022] bronte-main: 8 slice items
+[2022] bronte-south: 8 slice items
+[2023] oakville-main: 11 slice items
+[2023] oakville-south: 11 slice items
+[2023] clarkson-main: 11 slice items
+[2023] clarkson-north: 11 slice items
+[2023] bronte-main: 11 slice items
+[2023] bronte-south: 11 slice items
+[2024] oakville-main: 13 slice items
+[2024] oakville-south: 13 slice items
+[2024] clarkson-main: 13 slice items
+[2024] clarkson-north: 13 slice items
+[2024] bronte-main: 13 slice items
+[2024] bronte-south: 13 slice items
+[2025] oakville-main: 12 slice items
+[2025] oakville-south: 12 slice items
+[2025] clarkson-main: 12 slice items
+[2025] clarkson-north: 12 slice items
+[2025] bronte-main: 12 slice items
+[2025] bronte-south: 12 slice items
+[2026] oakville-main: 15 slice items
+[2026] oakville-south: 15 slice items
+[2026] clarkson-main: 15 slice items
+[2026] clarkson-north: 15 slice items
+[2026] bronte-main: 15 slice items
+[2026] bronte-south: 15 slice items
+Distinct acquisitions (date x orbit x rel_orbit x platform): 114
+  acq ('2018-06-03', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-06-15', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-06-22', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-06-27', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-04', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-09', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-16', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-21', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-07-28', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-02', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-09', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-14', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-21', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2018-08-26', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-05', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-10', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-17', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-22', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-06-29', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-04', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-11', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-16', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-23', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-07-28', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-04', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-09', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-16', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-21', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2019-08-28', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-06-04', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-06-11', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-06-23', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-06-28', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-05', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-10', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-17', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-22', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-07-29', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-03', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-10', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-15', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-22', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2020-08-27', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-06-06', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-06-11', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-06-18', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-06-23', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-07-05', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-07-12', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-07-17', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-05', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-10', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-17', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-22', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2021-08-29', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-06-25', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-06-30', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-07-19', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-07-24', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-08-05', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-08-12', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-08-24', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2022-08-29', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-06-01', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-06-08', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-06-13', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-06-20', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-07-07', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-07-14', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-07-19', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-08-07', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-08-12', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-08-19', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2023-08-24', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-02', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-07', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-14', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-19', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-06-26', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-07-01', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-07-13', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-07-20', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-01', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-06', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-13', 'ascending', 4, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-18', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2024-08-30', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-02', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-09', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-14', 'ascending', 77, 'SENTINEL-1A') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-21', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-06-26', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-07-08', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-07-27', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-01', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-08', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-13', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-20', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2025-08-25', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-04', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-09', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-16', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-21', 'ascending', 77, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-28', 'ascending', 4, 'sentinel-1a') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-06-28', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-07-10', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-07-17', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-07-22', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-07-29', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-03', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-10', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-15', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-22', 'ascending', 4, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+  acq ('2026-08-27', 'ascending', 77, 'sentinel-1d') lots=['bronte-main', 'bronte-south', 'clarkson-main', 'clarkson-north', 'oakville-main', 'oakville-south']
+Distinct slice items to read: 114
+UNIT CHECK scene S1D_IW_GRDH_1SDV_20260628T231543_20260628T231608_003443_006139_rtc 2026-06-28: n=949124 min=0.0004 p5=0.0034 median=0.1060 p95=0.5760 max=628.48
+UNIT CHECK: values are LINEAR gamma naught (power ratio). Conversion: VV_dB = 10*log10(linear), linear clipped at 1e-6.
+  wrote 6 rows (total done 630)
+  wrote 6 rows (total done 636)
+  wrote 6 rows (total done 642)
+  wrote 6 rows (total done 648)
+  wrote 6 rows (total done 654)
+  wrote 6 rows (total done 660)
+  wrote 6 rows (total done 666)
+  wrote 6 rows (total done 672)
+  wrote 6 rows (total done 678)
+  wrote 6 rows (total done 684)
+Done. CSV rows total: 684

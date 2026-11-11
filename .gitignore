@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+*.egg-info/
+
+# Raw downloads (regenerable, too large for GitHub) — see README
+*.osm.pbf
+GO-GTFS.zip
+gtfs/
+osm_parking_*.json
+osm_union_area.json
+go_parking_raw.json
+empty_stations.json
+lots_go.csv
+stations_go.csv
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
