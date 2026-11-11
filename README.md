@@ -13,18 +13,6 @@ form ground–vehicle double-bounce / corner reflectors, so a full lot is
 brighter. A lot's mean VV backscatter over successive passes is a
 long-term parking-demand proxy.
 
-## 中文摘要
-
-GO 只公布停车场容量，不公布占用率，也没有历史记录，露天停车场里没有
-传感器。本项目用 Sentinel-1 雷达 VV 后向散射重建 2018–2026 年 GO 火车站
-停车场的使用趋势：车多则亮，车少则暗。试点为 Oakville、Clarkson、
-Bronte 三站 6 个露天 lot，polygon 由作者在卫星图上手绘；全网清点覆盖
-71 个火车站、69,338 个车位。结果：2020–2021 年需求崩塌（恢复指数
-61–84，2019 年 = 100），2023–2024 年恢复到 2019 年水平，2025–2026 年
-持平。**这不是占用率百分比**：雷达测的是夏天约 19:10 的晚间残余量，
-且未经地面真值标定；业务价值在于停车指数与 PRESTO 客流的**分叉**，
-而不是重讲客流恢复的故事。
-
 ## Results in brief
 
 Pilot: Oakville, Clarkson, Bronte — 6 outdoor lots, summers June–August
