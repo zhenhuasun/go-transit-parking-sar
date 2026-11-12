@@ -1,11 +1,12 @@
 {
   "type": "FeatureCollection",
+  "name": "go-parking-control-areas-t1b",
   "features": [
     {
       "type": "Feature",
       "properties": {
         "id": "control-1794494256535",
-        "name": "Bronte GO — Control",
+        "name": "Bronte GO \u2014 Control",
         "status": "user-drawn",
         "color": "#ef6c00"
       },
@@ -40,84 +41,8 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "control-1794494368787",
-        "name": "Oakville GO — Control",
-        "status": "user-drawn",
-        "color": "#ef6c00"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -79.681912,
-              43.459149
-            ],
-            [
-              -79.681215,
-              43.458789
-            ],
-            [
-              -79.680756,
-              43.458904
-            ],
-            [
-              -79.680523,
-              43.458466
-            ],
-            [
-              -79.680088,
-              43.458558
-            ],
-            [
-              -79.679943,
-              43.45821
-            ],
-            [
-              -79.680016,
-              43.458068
-            ],
-            [
-              -79.680091,
-              43.457949
-            ],
-            [
-              -79.680297,
-              43.457818
-            ],
-            [
-              -79.680464,
-              43.457673
-            ],
-            [
-              -79.680657,
-              43.457603
-            ],
-            [
-              -79.680794,
-              43.457573
-            ],
-            [
-              -79.681062,
-              43.45755
-            ],
-            [
-              -79.681166,
-              43.457595
-            ],
-            [
-              -79.681912,
-              43.459149
-            ]
-          ]
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "id": "control-1794494433572",
-        "name": "Clarkson GO — Control",
+        "name": "Clarkson GO \u2014 Control",
         "status": "user-drawn",
         "color": "#ef6c00"
       },
@@ -148,7 +73,50 @@
           ]
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "control-1794497254064",
+        "name": "Oakville GO \u2014 Control",
+        "status": "user-drawn",
+        "color": "#ef6c00"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -79.690554,
+              43.445924
+            ],
+            [
+              -79.689328,
+              43.445019
+            ],
+            [
+              -79.6898,
+              43.44469
+            ],
+            [
+              -79.690994,
+              43.445556
+            ],
+            [
+              -79.690562,
+              43.445828
+            ],
+            [
+              -79.690635,
+              43.44586
+            ],
+            [
+              -79.690554,
+              43.445924
+            ]
+          ]
+        ]
+      }
     }
-  ],
-  "name": "go-parking-control-areas-t1b"
+  ]
 }

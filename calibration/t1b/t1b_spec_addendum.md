@@ -12,6 +12,43 @@ absent). T1b supplies that missing control after the fact. Nothing in T1
 — its data, code, or PASS decision — is re-run or altered by T1b. T1b can
 only confirm T1's PASS or downgrade it to INCONCLUSIVE (see Decision).
 
+## Revision — round 2 (2026-11-12; no separate T1c)
+
+Round 1 (above) downgraded T1 to INCONCLUSIVE. The user then established
+the cause (ground truth, 2026-11-12): part of the Oakville control area
+was a building with an active parking lot prior to 2024. That area is
+invalidated and replaced; there is no separate T1c — round 2 edits this
+addendum and re-runs the same test in `calibration/t1b/`.
+
+- **Replaced:** Oakville GO — Control v1 (id `control-1794494368787`,
+  14,009 m²) is removed entirely. Its extracted rows are kept only in
+  the round-1 archive `t1b_control_vv_round1.csv` and are not used in
+  round 2.
+- **New:** Oakville GO — Control v2 (id `control-1794497254064`),
+  7,232 m², centroid 43.44529, −79.69016, nearest lot edge 787 m
+  (Oakville Main). Valid and closed (7 vertices); no overlap with any
+  parking lot or the other controls. Area ≈ 72 pixels at 10 m,
+  comparable to the smallest lot (Oakville South, 82 pixels). OSM
+  coverage (local Geofabrik extract, full-OSM scan 2026-11-12):
+  93.3% building:industrial — a factory/warehouse roof, no parking
+  overlap, no other land use recorded.
+- **Unchanged:** Bronte and Clarkson controls (same polygons, same
+  extracted rows reused from round 1).
+- **Distance note:** v2 Oakville is farther from the station than the
+  T1b areas (787 m to the nearest lot edge, vs 167–437 m before; ~1.1 km
+  to the lot centroids). Accepted under the user's relaxed rule ("as long
+  as they are not far away", 2026-11-12): a control needs the same
+  scenes and the same local imaging conditions, which it has. The
+  distance is recorded here, not hidden.
+- **Rules unchanged:** extraction, sample, models, and decision criteria
+  below are identical in round 2. Only the Oakville control polygon (and
+  its extracted rows) changed.
+- **Round-2 decision:** if both criteria hold, T1's PASS is
+  **reinstated** (history preserved: PASS → INCONCLUSIVE (round 1) →
+  PASS reinstated (round 2)). If either criterion fails, T1 **stays
+  INCONCLUSIVE**. The T1 report annotation is updated to the round-2
+  outcome; the round-1 report is kept as `t1b_report_round1.md`.
+
 ## Control areas (input)
 
 File: `polygons/control-areas.geojson` — user-drawn 2026-11-12 with
@@ -111,16 +148,31 @@ T1's PASS **stands** if BOTH hold:
 **INCONCLUSIVE** (not FAIL). The T1 report's PASS is annotated, not
 rewritten; the T1b report records the downgrade and the reason.
 
+**Round 2:** the same two criteria are applied to the revised control
+set. If both hold, T1's PASS is **reinstated**; if either fails, T1
+**stays INCONCLUSIVE**. Round 1's INCONCLUSIVE (Oakville v1 control)
+is preserved in `t1b_report_round1.md` and is not erased by a round-2
+pass.
+
 ## Outputs (`calibration/t1b/`)
 
 - `t1b_spec_addendum.md` — this file (committed before any extraction
-  or modelling).
-- `extract-control-vv.py` — extraction script.
-- `t1b_control_vv.csv` — extracted per-scene control VV.
+  or modelling; round-2 revision committed before the round-2 run).
+- `extract-control-vv.py` — extraction script (unchanged; resume
+  behaviour extracts only the new Oakville control in round 2).
+- `t1b_control_vv.csv` — extracted per-scene control VV (round 2:
+  Bronte/Clarkson rows reused from round 1, Oakville v2 rows fresh;
+  Oakville v1 rows removed).
 - `t1b_weekend_test.py` — single reproducible analysis script, seed 42.
-- `t1b_results.csv` — every coefficient from every model.
+- `t1b_results.csv` — every coefficient from every model (current round).
 - `t1b_report.md` — control results, differenced results, decision
-  against each criterion, deviations list, plain-language reading.
+  against each criterion, deviations list, plain-language reading
+  (current round).
+- `t1b_results_round1.csv`, `t1b_report_round1.md`,
+  `t1b_control_vv_round1.csv` — round-1 archive (INCONCLUSIVE), kept
+  unchanged.
+- `control-areas-v2.geojson` — the revised control set (staging copy;
+  the committed copy is `polygons/control-areas.geojson`).
 
 ## Deviations from this addendum
 
