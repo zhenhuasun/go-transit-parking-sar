@@ -49,6 +49,59 @@ addendum and re-runs the same test in `calibration/t1b/`.
   INCONCLUSIVE**. The T1 report annotation is updated to the round-2
   outcome; the round-1 report is kept as `t1b_report_round1.md`.
 
+## Revision — round 3 (2026-11-12; no separate T1c)
+
+Round 2 also downgraded T1 to INCONCLUSIVE (Oakville v2 control showed
+a weekend effect, −0.885 dB, p = 0.0064, present in every year
+2018–2026). The user then drew a new Oakville control as a pooled set
+of roofs and checked each roof's historical imagery himself (no major
+overhaul). There is no separate T1c — round 3 edits this addendum and
+re-runs the same test.
+
+- **Sent:** Oakville GO — Control, pooled MultiPolygon, 5 parts,
+  12,032 m² (user export `control-areas-v3-user.geojson`, 2026-11-12).
+- **Dropped before the run:** part 2 (3,286 m², centroid 43.44552,
+  −79.69048). Validation found 3,244 m² of it (99%) lies inside the
+  failed round-2 Oakville roof (7,232 m², centroid 43.44529, −79.69016)
+  — a sub-section of the same factory roof. Pooling it in would
+  re-import the round-2 confounder. The user chose to drop it
+  (2026-11-12, "Drop part 2, run with the other 4").
+- **New:** Oakville GO — Control v3 (id `control-oakville-pooled`),
+  pooled MultiPolygon, 4 parts, 8,747 m². Parts: 2,176 m² (centroid
+  43.46179, −79.67509; nearest lot edge 829 m), 1,794 m² (43.44700,
+  −79.69352; 779 m), 1,643 m² (43.44757, −79.69325; 718 m), 3,133 m²
+  (43.44544, −79.70348; 1,511 m). Valid MultiPolygon; the 4 parts do not
+  overlap each other or any parking lot. Area ≈ 87 pixels at 10 m,
+  comparable to the smallest lot (Oakville South, 82 pixels). OSM
+  coverage (local Geofabrik extract, full-OSM scan 2026-11-12) of the
+  5-part set as sent (12,033 m²): 40.9% building:retail, 38.1%
+  building:industrial, 28.6% landuse:industrial (overlaps the building
+  footprints), 17.9% building:yes "Longo's" — and **no parking overlap
+  anywhere**. The 4-part set as run is a subset of that scan, so it
+  also has no parking overlap; its building mix is retail-heavier
+  because the dropped part 2 was the industrial factory roof. A
+  per-part scan is running to record each part's coverage exactly.
+- **Unchanged:** Bronte and Clarkson controls (same polygons, same
+  extracted rows reused from rounds 1–2).
+- **Distance note:** the v3 parts sit 718–1,511 m from the nearest lot
+  edge — farther than round 2's 787 m. Accepted under the user's relaxed
+  rule ("as long as they are not far away", 2026-11-12): a control needs
+  the same scenes and the same local imaging conditions, which it has.
+  The distances are recorded here, not hidden.
+- **Historical imagery:** the user checked each of the 5 roofs'
+  historical images himself before sending them ("no major overhaul",
+  2026-11-12). Recorded as user ground truth; the assistant did not
+  independently verify the imagery.
+- **Rules unchanged:** extraction, sample, models, and decision criteria
+  below are identical in round 3. Only the Oakville control polygon (and
+  its extracted rows) changed.
+- **Round-3 decision:** if both criteria hold, T1's PASS is
+  **reinstated** (history preserved: PASS → INCONCLUSIVE (round 1) →
+  INCONCLUSIVE (round 2) → PASS reinstated (round 3)). If either
+  criterion fails, T1 **stays INCONCLUSIVE**. The T1 report annotation
+  is updated to the round-3 outcome; the round-1 and round-2 reports
+  are kept as `t1b_report_round1.md` and `t1b_report_round2.md`.
+
 ## Control areas (input)
 
 File: `polygons/control-areas.geojson` — user-drawn 2026-11-12 with
@@ -154,6 +207,13 @@ set. If both hold, T1's PASS is **reinstated**; if either fails, T1
 is preserved in `t1b_report_round1.md` and is not erased by a round-2
 pass.
 
+**Round 3:** the same two criteria are applied to the revised control
+set (pooled 4-roof Oakville control, part 2 dropped — see Revision —
+round 3). If both hold, T1's PASS is **reinstated**; if either fails,
+T1 **stays INCONCLUSIVE**. Rounds 1–2 INCONCLUSIVE verdicts are
+preserved in `t1b_report_round1.md` and `t1b_report_round2.md` and are
+not erased by a round-3 pass.
+
 ## Outputs (`calibration/t1b/`)
 
 - `t1b_spec_addendum.md` — this file (committed before any extraction
@@ -171,8 +231,16 @@ pass.
 - `t1b_results_round1.csv`, `t1b_report_round1.md`,
   `t1b_control_vv_round1.csv` — round-1 archive (INCONCLUSIVE), kept
   unchanged.
-- `control-areas-v2.geojson` — the revised control set (staging copy;
+- `t1b_results_round2.csv`, `t1b_report_round2.md`,
+  `t1b_control_vv_round2.csv`, `t1b_weekend_coefs_round2.png` —
+  round-2 archive (INCONCLUSIVE), kept unchanged.
+- `control-areas-v2.geojson` — the round-2 control set (staging copy;
   the committed copy is `polygons/control-areas.geojson`).
+- `control-areas-v3-user.geojson` — the user's 5-part Oakville export
+  as received (round 3 input; part 2 dropped before the run).
+- `control-areas-v3.geojson` — the round-3 control set as run (4-part
+  pooled Oakville control; the committed copy is
+  `polygons/control-areas.geojson`).
 
 ## Deviations from this addendum
 

@@ -330,7 +330,7 @@ def main():
     crit2c = n_neg_diff >= 5
     crit2 = crit2a and crit2b and crit2c
     if crit1 and crit2:
-        decision = "PASS — T1 PASS reinstated (T1b round 2, revised Oakville control)"
+        decision = "PASS — T1 PASS reinstated (T1b round 3, pooled 4-roof Oakville control)"
     else:
         decision = "INCONCLUSIVE — T1 stays INCONCLUSIVE"
     print(f"\nDECISION: {decision} (crit1={crit1}, crit2={crit2} "
@@ -364,20 +364,25 @@ def main():
     lines.append("")
     lines.append("**Status:** this test was specified AFTER the T1 result (PASS, "
                  "2026-11-12) — see `t1b_spec_addendum.md`. It is not "
-                 "pre-registered with T1. Round 2 (2026-11-12): the Oakville "
-                 "control was replaced after round 1 downgraded T1 to "
-                 "INCONCLUSIVE; Bronte and Clarkson controls are unchanged. "
-                 "Round 1 is archived as `t1b_report_round1.md`.")
+                 "pre-registered with T1. Round 3 (2026-11-12): the Oakville "
+                 "control was replaced again — a pooled 4-roof control, after "
+                 "part 2 of the user's 5-roof set was dropped for overlapping "
+                 "the failed round-2 roof; Bronte and Clarkson controls are "
+                 "unchanged. Rounds 1–2 are archived as "
+                 "`t1b_report_round1.md` and `t1b_report_round2.md`.")
     lines.append("")
     lines.append(f"**Decision: {decision}**")
     lines.append("")
     lines.append("## Extraction check")
     lines.append("")
+    px = ctrl.groupby("control_name")["n_pixels"].mean()
     lines.append(f"Control VV extracted for all 114 T1 summer scenes "
                  f"(scene sets identical to the lot CSV). Unit check on the "
                  f"first scene confirmed LINEAR gamma naught, same branch as "
-                 f"the lots. Mean pixels per scene: Bronte control 224, "
-                 f"Clarkson control 85, Oakville control 140. "
+                 f"the lots. Mean pixels per scene: Bronte control "
+                 f"{px['Bronte GO — Control']:.0f}, Clarkson control "
+                 f"{px['Clarkson GO — Control']:.0f}, Oakville control "
+                 f"{px['Oakville GO — Control']:.0f}. "
                  f"Differenced rows: {len(diff)} (dropped {len(dropped)}).")
     lines.append("")
     lines.append("## C — Control weekend effects (primary years 2018, 2019, 2022–2026)")
@@ -443,8 +448,13 @@ def main():
     lines.append("")
     lines.append("- Spec: `t1b_spec_addendum.md`, committed to "
                  "`zhenhuasun/go-transit-parking-sar` as "
-                 "`7b5a9730f47d6aea4e63e141177fe1c6fd79b2e0` BEFORE any "
-                 "extraction or modelling in this test.")
+                 "`7b5a9730f47d6aea4e63e141177fe1c6fd79b2e0` (round 1) and "
+                 "`8bda63b7da552af2f91363d7141b4e10814f1531` (round 2, revised "
+                 "Oakville control) BEFORE any extraction or modelling in "
+                 "each round. Round 3 (2026-11-12): spec revision + 4-part "
+                 "Oakville control committed BEFORE the run; the round-3 "
+                 "commit hash is recorded in the repo history "
+                 "(ROUND3_COMMIT_HASH).")
     lines.append("- Script: `t1b_weekend_test.py`, seed 42, 10,000 "
                  "permutations. Rerun: `python3 t1b_weekend_test.py` from the "
                  "repo root (uses only numpy, pandas, matplotlib). "
@@ -456,8 +466,7 @@ def main():
     lines.append("")
     lines.append("The control areas are surfaces near each station that should "
                  "not care what day of the week it is — warehouse and factory "
-                 "roofs, and a parking area that has sat empty and locked for "
-                 "years. If the satellite or the processing itself produced a "
+                 "roofs. If the satellite or the processing itself produced a "
                  "weekend pattern, the controls would show it too.")
     if crit1 and crit2:
         lines.append("They do not (criterion 1), and subtracting each station's "
