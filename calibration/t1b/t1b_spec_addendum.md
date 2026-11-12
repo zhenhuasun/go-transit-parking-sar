@@ -102,6 +102,88 @@ re-runs the same test.
   is updated to the round-3 outcome; the round-1 and round-2 reports
   are kept as `t1b_report_round1.md` and `t1b_report_round2.md`.
 
+## Revision — round 4 (2026-11-12; no separate T1c)
+
+Rounds 1–3 all downgraded T1 to INCONCLUSIVE. The controls improved
+each round (round 3 finally passed criterion 1), but criterion 2 never
+cleared the p < 0.01 bar (round 3: pooled differenced −0.369 dB,
+p = 0.075). An exploratory sensitivity check (2026-11-12,
+`t1b_sensitivity_common_control.py`, not part of any decision) then
+differenced all 6 lots against each single control in turn: Bronte-only
+gave −0.501 dB (clustered p = 0.016, perm p = 0.017), Clarkson-only
+−0.372 dB (p = 0.125), Oakville-only −0.226 dB (p = 0.307) — all still
+short of 0.01, but Bronte-only was the strongest by a wide margin.
+
+The user then proposed the design change on physical grounds
+(2026-11-12): the Bronte roofs are the region's best control surface
+— one huge single unchanged warehouse roof (22,160 m², 224 px/scene,
+95.6% warehouse) — while Clarkson's is too small (8,385 m², 85 px)
+and Oakville's are too mixed (4 small roofs of different kinds). Two
+more big unchanged rooftops exist near Bronte. Round 4 therefore
+replaces the per-station mapping with a single common control for all
+6 lots. There is no separate T1c — round 4 edits this addendum and
+re-runs the same test.
+
+- **Design change:** a single common control — the pooled Bronte
+  control — is subtracted from all 6 lots. Rationale: the three
+  stations are 4–9 km apart and share the same Sentinel-1 scenes,
+  relative orbits, and ~19:10 acquisition times, so scene-level
+  artefacts (orbit geometry, incidence angle, calibration, regional
+  moisture) are common across stations; a control measured at Bronte
+  estimates that artefact level for Oakville and Clarkson too. What
+  the single control gives up is station-matched pairing: a confounder
+  that exists only at one station and only on weekends would not be
+  caught. That insurance is only worth having if the station controls
+  are clean themselves, and Oakville's never have been — the
+  per-station design's noise is what round 3's criterion-2 failure was
+  made of (Oakville control −0.209 dB wiping out both Oakville lots).
+- **New:** Bronte GO — Control v4 (id `control-bronte-pooled`),
+  pooled MultiPolygon, 3 parts, 48,071 m². Parts: 17,420 m² (centroid
+  43.40964, −79.72724; nearest lot edge 642 m, Bronte South),
+  8,511 m² (43.41434, −79.72802; 330 m, Bronte South), 22,140 m²
+  (43.41376, −79.72377; 20 m, Bronte South). Part 3 is the re-traced
+  round 1–3 Bronte roof (99.5% overlap with the committed polygon;
+  the round-1 table's "167 m" for that roof was a centroid distance —
+  its edge distance is 20 m, same as part 3). Valid MultiPolygon; the
+  3 parts do not overlap each other or any parking lot. Area ≈ 481
+  pixels at 10 m. OSM coverage (local Geofabrik extract, full-OSM
+  scan 2026-11-12) of the pooled set (48,069 m²): 53.9%
+  building:industrial, 44.1% building:warehouse — 98.0% building
+  in total — and **no parking overlap anywhere**. Per-part:
+  roof 1 (17,420 m²) 100.0% building:industrial; roof 2
+  (8,511 m²) 100.0% building:industrial; roof 3 (22,139 m²)
+  95.8% building:warehouse.
+- **Historical imagery:** the user described the two new roofs as big
+  and unchanged (2026-11-12), and re-traced the existing Bronte roof
+  from the round-4 drawing page's reference outline. Recorded as user
+  ground truth; the assistant did not independently verify the
+  imagery.
+- **Replaced:** all three round-3 controls (Bronte, Clarkson, Oakville
+  pooled) are removed entirely. Their extracted rows are kept only in
+  the round-3 archive `t1b_control_vv_round3.csv` and are not used in
+  round 4. Note the old Bronte control shares the name "Bronte GO —
+  Control" with the new pooled control but has a different id
+  (`control-1794494256535` vs `control-bronte-pooled`); all old rows
+  are dropped before extraction so the two are never mixed.
+- **Diagnostic only (not part of the decision):** each of the 3 roofs
+  is extracted separately (`extract-control-vv-parts.py`, output
+  `t1b_control_vv_r4_parts.csv`) and its weekend coefficient reported
+  in the round-4 report, so one bad roof cannot hide inside the pool.
+  The diagnostic does not affect either criterion.
+- **Rules unchanged:** extraction, sample, models, and decision
+  criteria below are identical in round 4, with two mechanical
+  adaptations for the single-control design: criterion 1 is evaluated
+  on the one pooled control (the per-area and pooled models are the
+  same series, differing only in classical vs clustered SE); D1/D2
+  difference every lot against the same Bronte control. The 0.01 bar
+  is unchanged.
+- **Round-4 decision:** if both criteria hold, T1's PASS is
+  **reinstated** (history preserved: PASS → INCONCLUSIVE (rounds 1–3)
+  → PASS reinstated (round 4)). If either criterion fails, T1 **stays
+  INCONCLUSIVE**. The T1 report annotation is updated to the round-4
+  outcome; the round-1–3 reports are kept as `t1b_report_round1.md`,
+  `t1b_report_round2.md`, and `t1b_report_round3.md`.
+
 ## Control areas (input)
 
 File: `polygons/control-areas.geojson` — user-drawn 2026-11-12 with
@@ -234,6 +316,9 @@ not erased by a round-3 pass.
 - `t1b_results_round2.csv`, `t1b_report_round2.md`,
   `t1b_control_vv_round2.csv`, `t1b_weekend_coefs_round2.png` —
   round-2 archive (INCONCLUSIVE), kept unchanged.
+- `t1b_results_round3.csv`, `t1b_report_round3.md`,
+  `t1b_control_vv_round3.csv`, `t1b_weekend_coefs_round3.png` —
+  round-3 archive (INCONCLUSIVE), kept unchanged.
 - `control-areas-v2.geojson` — the round-2 control set (staging copy;
   the committed copy is `polygons/control-areas.geojson`).
 - `control-areas-v3-user.geojson` — the user's 5-part Oakville export
@@ -241,6 +326,15 @@ not erased by a round-3 pass.
 - `control-areas-v3.geojson` — the round-3 control set as run (4-part
   pooled Oakville control; the committed copy is
   `polygons/control-areas.geojson`).
+- `control-areas-v4-user.geojson` — the user's 3-part Bronte export
+  as received (round 4 input; identical to the set as run).
+- `control-areas-v4.geojson` — the round-4 control set as run
+  (3-part pooled Bronte control; the committed copy is
+  `polygons/control-areas.geojson`).
+- `control-areas-v4-parts.geojson` — the 3 Bronte roofs as separate
+  Polygon features (per-roof diagnostic input, not the decision).
+- `extract-control-vv-parts.py` — per-roof diagnostic extraction
+  (output `t1b_control_vv_r4_parts.csv`).
 
 ## Deviations from this addendum
 

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draw Control Areas — GO Parking SAR (T1b, round 4)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<style>
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#222}
+  header{padding:14px 16px 10px;background:#fff3e0;border-bottom:2px solid #ef6c00}
+  header h1{font-size:18px;margin:0 0 6px}
+  header p, header li{margin:4px 0;font-size:14px;line-height:1.55}
+  #map{height:60vh;min-height:420px}
+  .btns{padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap}
+  button{padding:9px 13px;font-size:14px;border:1px solid #555;border-radius:8px;background:#fff;cursor:pointer}
+  button.primary{background:#ef6c00;color:#fff;border-color:#c85a00;font-weight:600}
+  button:hover{filter:brightness(0.95)}
+  textarea{width:calc(100% - 32px);margin:0 16px 8px;height:140px;font-family:monospace;font-size:12px}
+  .note{margin:0 16px 20px;font-size:13px;color:#555;line-height:1.5}
+  table{border-collapse:collapse;margin:0 16px 16px;font-size:13px;width:calc(100% - 32px)}
+  th,td{border:1px solid #ccc;padding:6px 8px;text-align:left;vertical-align:top}
+  th{background:#f2f2f2}
+</style>
+</head>
+<body>
+<header>
+  <h1>Draw Control Areas — GO Parking SAR (T1b, round 4: single Bronte control)</h1>
+  <p>Round 4 uses <b>one control for all 6 lots</b>: the big unchanged warehouse roofs near <b>Bronte GO</b>. Draw <b>three rooftops near Bronte</b> — the existing Bronte control roof plus the two new ones you found. On export they are <b>pooled into a single Bronte control</b> (one MultiPolygon), so no single roof can sink the test. Each must be a surface with <b>no parked cars</b>, to check whether the weekend effect we found is real or just something the satellite does on weekends. The 6 parking lots are shown in <b style="color:#1565c0">blue</b> for reference (you cannot edit them); the dashed grey circles are <b>500 m around each lot</b> — a guide, not a rule.</p>
+  <ol>
+    <li><b>Draw 3 Bronte rooftops</b> (each its own polygon). The existing Bronte roof is shown as an <b style="color:#ef6c00">orange dashed outline</b> — trace it as roof 1, then draw your two new roofs as roof 2 and roof 3. Trace each roof <b>10–15 m inside its edge</b>, so no radar pixel touches the ground, loading dock, or truck court around the building. The popup shows the area as you draw.</li>
+    <li><b>What counts:</b> a large, flat, empty rooftop. <b>What to avoid:</b> parking lots, garages, roads, rail tracks, trees, water — and on the roof itself: <b>HVAC units, solar panels, rooftop parking, or stored materials</b>. Each roof must have been <b>unchanged from 2018 to 2026</b> — no re-roof, no new units, no panels added (check the historical imagery, as you did for the others).</li>
+    <li><b>Draw:</b> click the polygon button at the top left of the map, click along the edge of the roof (inset from the real edge), and click the first point again to close it. Name it, e.g. <i>Bronte GO — Control roof 1</i>, then draw the next roof as <i>roof 2</i>.</li>
+    <li><b>Start fresh:</b> this page uses a new blank draft — your old Oakville/Clarkson polygons are not loaded here. If you open the old round-3 page by mistake, clear it and come back here.</li>
+    <li><b>Edit / delete:</b> use the ✏️ Edit and 🗑️ Delete buttons at the top left, then click Save.</li>
+    <li><b>Export:</b> when you have 3 Bronte roofs, click “Export GeoJSON” below, then “Copy” or “Download .geojson”, and send the file / text back to me. The export contains only the pooled Bronte control — nothing else.</li>
+  </ol>
+  <p>Your edits are saved automatically in this browser (localStorage) and will still be here next time you open this page. You can also draw on a phone, but the corner points are small — <b>do fine editing on a computer and use the phone for rough checks only</b>. Zoom to the maximum (z 18–19) before tracing.</p>
+<div id="map"></div>
+<div class="btns">
+  <button onclick="fly(43.4145,-79.724,17)">Bronte GO</button>
+  <button onclick="fly(43.465,-79.68,11)">All three stations</button>
+  <button class="primary" onclick="updateExport()">Export GeoJSON</button>
+  <button onclick="copyGeoJSON()">Copy GeoJSON</button>
+  <button onclick="downloadGeoJSON()">Download .geojson</button>
+  <button onclick="resetDraft()">Clear my control areas</button>
+</div>
+<textarea id="out" readonly placeholder="After clicking “Export GeoJSON”, the GeoJSON you drew will appear here."></textarea>
+<p class="note">Send it back to me any one of these ways: 1) send the downloaded .geojson file directly; 2) click “Copy GeoJSON” and paste it to me. I will then add a round-4 revision to the T1b specification — single Bronte control for all 6 lots — commit it first, and only then run the control-area test. The spec is written after seeing the round-1–3 results, and it will say so.</p>
+<div id="summary" class="note"></div>
+<script>
+var map = L.map('map').setView([43.4145,-79.724], 15);
+var sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, attribution:'Esri World Imagery'});
+var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'© OpenStreetMap'});
+sat.addTo(map);
+var layerCtl = L.control.layers({"Satellite":sat,"Streets":osm}).addTo(map);
+function fly(lat,lon,z){ map.flyTo([lat,lon], z); }
+// Reference: the 6 parking lots (read-only, blue) — embedded from polygons-user.geojson
+var LOTS = [
+ {
+  "id": "oakville-main",
+  "name": "Oakville GO \u2014 Main Lot",
+  "spaces": 2712,
+  "pts": [
+   [
+    43.45478,
+    -79.68282
+   ],
+   [
+    43.45171,
+    -79.68604
+   ],
+   [
+    43.45193,
+    -79.68644
+   ],
+   [
+    43.45211,
+    -79.68667
+   ],
+   [
+    43.45252,
+    -79.68681
+   ],
+   [
+    43.45296,
+    -79.68711
+   ],
+   [
+    43.45318,
+    -79.68701
+   ],
+   [
+    43.45331,
+    -79.68687
+   ],
+   [
+    43.45335,
+    -79.68693
+   ],
+   [
+    43.45351,
+    -79.68664
+   ],
+   [
+    43.45341,
+    -79.68629
+   ],
+   [
+    43.45442,
+    -79.68519
+   ],
+   [
+    43.45394,
+    -79.68459
+   ],
+   [
+    43.45409,
+    -79.68444
+   ],
+   [
+    43.45477,
+    -79.68537
+   ],
+   [
+    43.45574,
+    -79.68434
+   ],
+   [
+    43.45616,
+    -79.68374
+   ],
+   [
+    43.45642,
+    -79.68348
+   ],
+   [
+    43.45664,
+    -79.68304
+   ],
+   [
+    43.45613,
+    -79.68235
+   ],
+   [
+    43.45562,
+    -79.68293
+   ],
+   [
+    43.45553,
+    -79.68275
+   ],
+   [
+    43.45503,
+    -79.68327
+   ],
+   [
+    43.45478,
+    -79.68282
+   ]
+  ]
+ },
+ {
+  "id": "oakville-south",
+  "name": "Oakville GO \u2014 South Lot",
+  "spaces": 291,
+  "pts": [
+   [
+    43.45332,
+    -79.68265
+   ],
+   [
+    43.45322,
+    -79.68297
+   ],
+   [
+    43.45325,
+    -79.68317
+   ],
+   [
+    43.4534,
+    -79.68316
+   ],
+   [
+    43.45343,
+    -79.68348
+   ],
+   [
+    43.45346,
+    -79.68354
+   ],
+   [
+    43.45333,
+    -79.6837
+   ],
+   [
+    43.45336,
+    -79.68378
+   ],
+   [
+    43.45377,
+    -79.68333
+   ],
+   [
+    43.45419,
+    -79.6829
+   ],
+   [
+    43.45415,
+    -79.68285
+   ],
+   [
+    43.4543,
+    -79.68269
+   ],
+   [
+    43.45393,
+    -79.682
+   ],
+   [
+    43.45332,
+    -79.68265
+   ]
+  ]
+ },
+ {
+  "id": "clarkson-main",
+  "name": "Clarkson GO \u2014 Main Lot",
+  "spaces": 1274,
+  "pts": [
+   [
+    43.51174,
+    -79.63219
+   ],
+   [
+    43.51136,
+    -79.63169
+   ],
+   [
+    43.51043,
+    -79.63272
+   ],
+   [
+    43.51069,
+    -79.6331
+   ],
+   [
+    43.50987,
+    -79.63397
+   ],
+   [
+    43.51038,
+    -79.63416
+   ],
+   [
+    43.51055,
+    -79.63444
+   ],
+   [
+    43.51111,
+    -79.63384
+   ],
+   [
+    43.51167,
+    -79.63473
+   ],
+   [
+    43.51181,
+    -79.63458
+   ],
+   [
+    43.51188,
+    -79.63468
+   ],
+   [
+    43.51226,
+    -79.63423
+   ],
+   [
+    43.51208,
+    -79.63393
+   ],
+   [
+    43.51237,
+    -79.63362
+   ],
+   [
+    43.51207,
+    -79.63311
+   ],
+   [
+    43.51206,
+    -79.63254
+   ],
+   [
+    43.51221,
+    -79.6319
+   ],
+   [
+    43.51207,
+    -79.63171
+   ],
+   [
+    43.51174,
+    -79.63219
+   ]
+  ]
+ },
+ {
+  "id": "clarkson-north",
+  "name": "Clarkson GO \u2014 North Lot",
+  "spaces": 627,
+  "pts": [
+   [
+    43.51348,
+    -79.63474
+   ],
+   [
+    43.51326,
+    -79.63598
+   ],
+   [
+    43.51311,
+    -79.63656
+   ],
+   [
+    43.5131,
+    -79.63717
+   ],
+   [
+    43.51384,
+    -79.63671
+   ],
+   [
+    43.51409,
+    -79.63638
+   ],
+   [
+    43.51425,
+    -79.63603
+   ],
+   [
+    43.5145,
+    -79.63488
+   ],
+   [
+    43.51375,
+    -79.6339
+   ],
+   [
+    43.51346,
+    -79.63434
+   ],
+   [
+    43.5132,
+    -79.63396
+   ],
+   [
+    43.51215,
+    -79.63513
+   ],
+   [
+    43.51288,
+    -79.63605
+   ],
+   [
+    43.51307,
+    -79.63543
+   ],
+   [
+    43.5132,
+    -79.6349
+   ],
+   [
+    43.51316,
+    -79.63461
+   ],
+   [
+    43.51305,
+    -79.63439
+   ],
+   [
+    43.5132,
+    -79.63418
+   ],
+   [
+    43.51348,
+    -79.63474
+   ]
+  ]
+ },
+ {
+  "id": "bronte-main",
+  "name": "Bronte GO \u2014 Main / East Lot",
+  "spaces": 1824,
+  "pts": [
+   [
+    43.41756,
+    -79.72175
+   ],
+   [
+    43.41761,
+    -79.72185
+   ],
+   [
+    43.41765,
+    -79.72195
+   ],
+   [
+    43.41784,
+    -79.72228
+   ],
+   [
+    43.4173,
+    -79.72287
+   ],
+   [
+    43.41699,
+    -79.72235
+   ],
+   [
+    43.41587,
+    -79.72351
+   ],
+   [
+    43.41642,
+    -79.72406
+   ],
+   [
+    43.41692,
+    -79.72462
+   ],
+   [
+    43.41704,
+    -79.72449
+   ],
+   [
+    43.41713,
+    -79.72468
+   ],
+   [
+    43.41699,
+    -79.72484
+   ],
+   [
+    43.41761,
+    -79.72599
+   ],
+   [
+    43.41867,
+    -79.72489
+   ],
+   [
+    43.41749,
+    -79.72278
+   ],
+   [
+    43.41885,
+    -79.72129
+   ],
+   [
+    43.42003,
+    -79.72348
+   ],
+   [
+    43.4205,
+    -79.72299
+   ],
+   [
+    43.41897,
+    -79.72093
+   ],
+   [
+    43.41849,
+    -79.72152
+   ],
+   [
+    43.41821,
+    -79.72107
+   ],
+   [
+    43.41756,
+    -79.72175
+   ]
+  ]
+ },
+ {
+  "id": "bronte-south",
+  "name": "Bronte GO \u2014 South Lot",
+  "spaces": 1149,
+  "pts": [
+   [
+    43.41468,
+    -79.72213
+   ],
+   [
+    43.41536,
+    -79.72335
+   ],
+   [
+    43.41714,
+    -79.72152
+   ],
+   [
+    43.41637,
+    -79.72012
+   ],
+   [
+    43.41546,
+    -79.72113
+   ],
+   [
+    43.41567,
+    -79.72171
+   ],
+   [
+    43.41607,
+    -79.72243
+   ],
+   [
+    43.41571,
+    -79.72283
+   ],
+   [
+    43.41557,
+    -79.72253
+   ],
+   [
+    43.41585,
+    -79.72228
+   ],
+   [
+    43.41526,
+    -79.72125
+   ],
+   [
+    43.41466,
+    -79.72189
+   ],
+   [
+    43.41468,
+    -79.72213
+   ]
+  ]
+ }
+];
+var refLayer = new L.FeatureGroup();
+map.addLayer(refLayer);
+LOTS.forEach(function(l){
+  var poly = L.polygon(l.pts, {color:'#1565c0', weight:2, fillColor:'#1565c0', fillOpacity:0.15});
+  poly.bindPopup('<b>'+l.name+'</b><br>Parking lot ('+l.spaces+' spaces) — reference only, not editable.');
+  poly.bindTooltip(l.name);
+  refLayer.addLayer(poly);
+  // 500 m guide circle around the lot centroid
+  var clat = l.pts.reduce(function(s,p){return s+p[0];},0)/l.pts.length;
+  var clon = l.pts.reduce(function(s,p){return s+p[1];},0)/l.pts.length;
+  L.circle([clat,clon], {radius:500, color:'#777', weight:1, dashArray:'6 6', fill:false}).addTo(refLayer);
+});
+// Reference: the existing Bronte control roof (rounds 1-3, 22,160 m2) — orange dashed, trace it as roof 1
+var BRONTE_REF = [[43.414988, -79.723108], [43.414556, -79.72233], [43.412529, -79.724452], [43.412954, -79.725222], [43.414988, -79.723108]];
+var bronteRef = L.polygon(BRONTE_REF, {color:'#ef6c00', weight:2, dashArray:'5 4', fillColor:'#ef6c00', fillOpacity:0.08});
+bronteRef.bindPopup('<b>Existing Bronte control roof</b> (22,160 m&sup2;, warehouse)<br>Reference only — trace it as \u201cBronte GO \u2014 Control roof 1\u201d, inset 10–15 m from the edge.');
+bronteRef.bindTooltip('Existing Bronte control roof — trace as roof 1');
+bronteRef.addTo(map);
+layerCtl.addOverlay(bronteRef, 'Existing Bronte roof (reference)');
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+function areaM2(layer){
+  try{
+    var latlngs = layer.getLatLngs()[0];
+    return Math.round(L.GeometryUtil.geodesicArea(latlngs));
+  }catch(e){ return null; }
+}
+function styleControl(){
+  return {color:'#ef6c00', weight:3, fillColor:'#ef6c00', fillOpacity:0.25};
+}
+function loadSaved(){
+  try{
+    var raw = localStorage.getItem('go-parking-control-areas-v2');
+    if(!raw) return false;
+    var gj = JSON.parse(raw);
+    if(!gj.features || !gj.features.length) return false;
+    drawnItems.clearLayers();
+    L.geoJSON(gj, {style:styleControl,
+      onEachFeature:function(f, layer){
+        layer.feature = f;
+        var p = f.properties || {};
+        var a = areaM2(layer);
+        layer.bindPopup('<b>'+(p.name||'Unnamed')+'</b><br>Control area'+(a!==null?' — '+a.toLocaleString()+' m²':''));
+        layer.bindTooltip(p.name||'Unnamed');
+      }}).addTo(drawnItems);
+    return true;
+  }catch(e){ return false; }
+}
+loadSaved();
+var drawControl = new L.Control.Draw({
+  edit:{featureGroup:drawnItems},
+  draw:{polygon:{allowIntersection:false, showArea:true, shapeOptions:{color:'#ef6c00', weight:3, fillOpacity:0.25}},
+    marker:false, polyline:false, rectangle:false, circle:false, circlemarker:false}
+});
+map.addControl(drawControl);
+map.on(L.Draw.Event.CREATED, function(e){
+  var layer = e.layer;
+  var name = prompt('Name this Bronte rooftop — e.g. "Bronte GO — Control roof 1", then "roof 2", "roof 3".', 'Bronte GO — Control roof 1');
+  layer.feature = {type:'Feature', properties:{id:'control-'+Date.now(), name:name||'New Control', status:'user-drawn', color:'#ef6c00'}};
+  var a = areaM2(layer);
+  layer.bindPopup('<b>'+(name||'New Control')+'</b><br>Control area'+(a!==null?' — '+a.toLocaleString()+' m²':''));
+  layer.bindTooltip(name||'New Control');
+  drawnItems.addLayer(layer);
+  updateExport();
+});
+map.on(L.Draw.Event.EDITED, updateExport);
+map.on(L.Draw.Event.DELETED, updateExport);
+function stationOf(name){
+  var n = (name||'').toLowerCase();
+  if (n.indexOf('oakville')===0) return 'Oakville';
+  if (n.indexOf('clarkson')===0) return 'Clarkson';
+  if (n.indexOf('bronte')===0) return 'Bronte';
+  return 'Other';
+}
+function rawGeoJSON(){
+  var gj = drawnItems.toGeoJSON();
+  gj.name = 'go-parking-control-areas-t1b-r4';
+  return gj;
+}
+// Export: all Bronte polygons are pooled into ONE MultiPolygon control.
+// Anything else drawn is ignored in round 4 (the single-control design).
+function pooledGeoJSON(){
+  var gj = rawGeoJSON();
+  var bro = [], others = [];
+  gj.features.forEach(function(f){
+    var n = ((f.properties && f.properties.name) || '');
+    if (stationOf(n)==='Bronte') bro.push(f); else others.push(f);
+  });
+  var out = {type:'FeatureCollection', name:'go-parking-control-areas-t1b-r4', features: []};
+  if (bro.length){
+    out.features.push({type:'Feature',
+      properties:{id:'control-bronte-pooled', name:'Bronte GO — Control', status:'user-drawn', color:'#ef6c00', parts: bro.length},
+      geometry:{type:'MultiPolygon', coordinates: bro.map(function(f){ return f.geometry.coordinates; })}});
+  }
+  return out;
+}
+function updateSummary(){
+  var groups = {Bronte:[], Oakville:[], Clarkson:[], Other:[]};
+  drawnItems.eachLayer(function(layer){
+    var p = (layer.feature && layer.feature.properties) || {};
+    groups[stationOf(p.name)].push({name:p.name||'Unnamed', area:areaM2(layer)});
+  });
+  var h = '<b>What you have drawn (live):</b><ul>';
+  ['Bronte','Oakville','Clarkson','Other'].forEach(function(st){
+    var list = groups[st];
+    if(!list.length){ h += '<li><b>'+st+':</b> nothing drawn yet</li>'; return; }
+    var tot = list.reduce(function(s,x){return s+(x.area||0);},0);
+    h += '<li><b>'+st+':</b> '+list.length+' polygon'+(list.length>1?'s':'')+' — '+
+      list.map(function(x){return '“'+x.name+'” ('+(x.area!==null?x.area.toLocaleString()+' m²':'?')+')';}).join(', ')+
+      (st==='Bronte' ? ' — <b>pooled total '+tot.toLocaleString()+' m²</b>' : '')+'</li>';
+  });
+  h += '</ul>';
+  var warns = [];
+  if(groups.Bronte.length!==3) warns.push('Bronte should be exactly 3 rooftops (now '+groups.Bronte.length+').');
+  var others = groups.Oakville.length + groups.Clarkson.length + groups.Other.length;
+  if(others) warns.push(others+' non-Bronte polygon(s) drawn — round 4 exports the Bronte control only, so these will not be exported. Delete them or ignore them.');
+  groups.Bronte.forEach(function(x){
+    if(x.area!==null && x.area<1000) warns.push('“'+x.name+'” is only '+x.area.toLocaleString()+' m² — very small for a control area.');
+  });
+  if(warns.length) h += '<p style="color:#b71c1c"><b>Check before exporting:</b> '+warns.join(' ')+'</p>';
+  else h += '<p style="color:#2e7d32">Looks complete — export below and send it back.</p>';
+  document.getElementById('summary').innerHTML = h;
+}
+function updateExport(){
+  var gj = pooledGeoJSON();
+  document.getElementById('out').value = JSON.stringify(gj, null, 2);
+  try{ localStorage.setItem('go-parking-control-areas-v2', JSON.stringify(rawGeoJSON())); }catch(e){}
+  updateSummary();
+}
+function copyGeoJSON(){
+  updateExport();
+  var t = document.getElementById('out');
+  t.select();
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t.value).then(function(){ alert('GeoJSON copied — just paste it to me.'); }); }
+  else { document.execCommand('copy'); alert('GeoJSON copied — just paste it to me.'); }
+}
+function downloadGeoJSON(){
+  updateExport();
+  var blob = new Blob([document.getElementById('out').value], {type:'application/json'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'go-parking-control-areas-r4.geojson'; a.click();
+}
+function resetDraft(){
+  if(confirm('Clear all control areas you drew? The parking lots (blue) stay.')){ localStorage.removeItem('go-parking-control-areas-v2'); drawnItems.clearLayers(); updateExport(); }
+}
+updateExport();
+</script>
+</body>
+</html>

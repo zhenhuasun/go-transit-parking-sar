@@ -7,18 +7,20 @@ with T1. Implements the addendum exactly:
   C1  Per-area OLS on control VV: VV_dB ~ weekend + C(orbit) + C(year).
   C2  Pooled control OLS: VV_dB ~ weekend + C(area) + C(area):C(orbit)
       + C(area):C(year), SE clustered by acquisition date.
-  D1  Per-lot differenced OLS: (lot VV_dB - same-station control VV_dB)
+      (Round 4 has ONE control area, so C1 and C2 are the same series,
+      differing only in classical vs clustered SE.)
+  D1  Per-lot differenced OLS: (lot VV_dB - common Bronte control VV_dB)
       ~ weekend + C(orbit) + C(year).
   D2  Pooled differenced OLS (same spec as T1 pooled), clustered SE,
       plus permutation test identical to T1 Step 2c (10,000 perms,
       seed 42).
 
 Decision (addendum): T1 PASS stands iff (1) no control weekend effect
-(all 3 per-area p >= 0.05 AND pooled control p >= 0.05, either sign)
-and (2) the differenced series passes all T1 criteria (pooled coef < 0
-with clustered p < 0.01; permutation one-sided p < 0.01; >= 5 of 6 lots
-negative on differenced per-lot coefs). Otherwise T1 is downgraded to
-INCONCLUSIVE (not FAIL).
+(the one pooled control's per-area p >= 0.05 AND pooled control
+p >= 0.05, either sign) and (2) the differenced series passes all T1
+criteria (pooled coef < 0 with clustered p < 0.01; permutation
+one-sided p < 0.01; >= 5 of 6 lots negative on differenced per-lot
+coefs). Otherwise T1 is downgraded to INCONCLUSIVE (not FAIL).
 
 Dependencies: numpy, pandas, matplotlib only. OLS / cluster-robust SE /
 t p-values implemented with numpy + a continued-fraction incomplete-beta
@@ -43,9 +45,9 @@ N_PERM = 10_000
 PRIMARY_YEARS = [2018, 2019, 2022, 2023, 2024, 2025, 2026]
 LOTS = ["oakville-main", "oakville-south", "clarkson-main",
         "clarkson-north", "bronte-main", "bronte-south"]
-STATION_OF_LOT = {"oakville-main": "oakville", "oakville-south": "oakville",
-                  "clarkson-main": "clarkson", "clarkson-north": "clarkson",
-                  "bronte-main": "bronte", "bronte-south": "bronte"}
+# Round 4: single common control — every lot is differenced against
+# the pooled Bronte control (station "bronte" in t1b_control_vv.csv).
+STATION_OF_LOT = {lot: "bronte" for lot in LOTS}
 
 
 def stop(msg):
@@ -273,7 +275,7 @@ def main():
     print(f"primary: {len(lot_p)} lot rows, {len(ctrl_p)} control rows, "
           f"{lot_p['scene_id'].nunique()} scenes")
 
-    # differenced dataset: lot VV - same-station control VV, per scene
+    # differenced dataset: lot VV - common Bronte control VV, per scene
     ctrl_map = {(r["scene_id"], r["station"]): r["mean_VV_dB"]
                 for _, r in ctrl.iterrows()}
     diff_rows = []
@@ -330,7 +332,7 @@ def main():
     crit2c = n_neg_diff >= 5
     crit2 = crit2a and crit2b and crit2c
     if crit1 and crit2:
-        decision = "PASS — T1 PASS reinstated (T1b round 3, pooled 4-roof Oakville control)"
+        decision = "PASS — T1 PASS reinstated (T1b round 4, single pooled 3-roof Bronte control)"
     else:
         decision = "INCONCLUSIVE — T1 stays INCONCLUSIVE"
     print(f"\nDECISION: {decision} (crit1={crit1}, crit2={crit2} "
@@ -364,12 +366,14 @@ def main():
     lines.append("")
     lines.append("**Status:** this test was specified AFTER the T1 result (PASS, "
                  "2026-11-12) — see `t1b_spec_addendum.md`. It is not "
-                 "pre-registered with T1. Round 3 (2026-11-12): the Oakville "
-                 "control was replaced again — a pooled 4-roof control, after "
-                 "part 2 of the user's 5-roof set was dropped for overlapping "
-                 "the failed round-2 roof; Bronte and Clarkson controls are "
-                 "unchanged. Rounds 1–2 are archived as "
-                 "`t1b_report_round1.md` and `t1b_report_round2.md`.")
+                 "pre-registered with T1. Round 4 (2026-11-12): the design "
+                 "changed to a single common control — the pooled 3-roof "
+                 "Bronte control (48,071 m²) subtracted from all 6 lots — "
+                 "after rounds 1–3 all ended INCONCLUSIVE and an exploratory "
+                 "sensitivity check found the Bronte-only variant strongest "
+                 "(−0.501 dB, p = 0.016). Rounds 1–3 are archived as "
+                 "`t1b_report_round1.md`, `t1b_report_round2.md`, and "
+                 "`t1b_report_round3.md`.")
     lines.append("")
     lines.append(f"**Decision: {decision}**")
     lines.append("")
@@ -379,11 +383,24 @@ def main():
     lines.append(f"Control VV extracted for all 114 T1 summer scenes "
                  f"(scene sets identical to the lot CSV). Unit check on the "
                  f"first scene confirmed LINEAR gamma naught, same branch as "
-                 f"the lots. Mean pixels per scene: Bronte control "
-                 f"{px['Bronte GO — Control']:.0f}, Clarkson control "
-                 f"{px['Clarkson GO — Control']:.0f}, Oakville control "
-                 f"{px['Oakville GO — Control']:.0f}. "
-                 f"Differenced rows: {len(diff)} (dropped {len(dropped)}).")
+                 f"the lots. Mean pixels per scene: Bronte pooled control "
+                 f"{px['Bronte GO — Control']:.0f}. "
+                 f"Differenced rows: {len(diff)} (dropped {len(dropped)}). "
+                 f"All round-3 control rows were dropped before extraction "
+                 f"(the old Bronte control shares the name but has a "
+                 f"different id), so the CSV holds only the round-4 control.")
+    lines.append("")
+    lines.append("Per-part OSM coverage of the 3 Bronte roofs "
+                 "(local Geofabrik extract, full-OSM scan 2026-11-12; "
+                 "no parking overlap in any part): roof 1 (17,420 m²) "
+                 "100.0% building:industrial; roof 2 (8,511 m²) 100.0% "
+                 "building:industrial; roof 3 (22,139 m²) 95.8% "
+                 "building:warehouse. Pooled (48,069 m²): 53.9% "
+                 "building:industrial, 44.1% building:warehouse.")
+    lines.append("")
+    lines.append("Per-roof diagnostic (not part of the decision): each roof "
+                 "extracted separately — see "
+                 "`t1b_control_vv_r4_parts.csv`.")
     lines.append("")
     lines.append("## C — Control weekend effects (primary years 2018, 2019, 2022–2026)")
     lines.append("")
@@ -403,7 +420,7 @@ def main():
                  f"two-sided p = {c2['p']:.4g}, n = {c2['n']} rows, "
                  f"{c2['n_clusters']} date clusters.")
     lines.append("")
-    lines.append("## D — Differenced weekend effects (lot − same-station control)")
+    lines.append("## D — Differenced weekend effects (lot − common Bronte control)")
     lines.append("")
     lines.append("Same models as T1, fitted on differenced VV. Permutation: "
                  "10,000 permutations, seed 42, weekend label shuffled among "
@@ -442,7 +459,14 @@ def main():
     lines.append("")
     lines.append("## Deviations from the addendum")
     lines.append("")
-    lines.append("None.")
+    lines.append("Two local-only edits to the run script after the round-4 "
+                 "spec commit (the committed script differs from the run "
+                 "script only in these string constants, neither of which "
+                 "affects any model): the round-4 commit hash was inserted "
+                 "into the reproducibility note below (the hash did not exist "
+                 "when the script was written), and the per-part OSM "
+                 "coverage lines were added to the Extraction check section "
+                 "(the per-part scan finished after the spec commit).")
     lines.append("")
     lines.append("## Reproducibility")
     lines.append("")
@@ -450,11 +474,12 @@ def main():
                  "`zhenhuasun/go-transit-parking-sar` as "
                  "`7b5a9730f47d6aea4e63e141177fe1c6fd79b2e0` (round 1) and "
                  "`8bda63b7da552af2f91363d7141b4e10814f1531` (round 2, revised "
-                 "Oakville control) BEFORE any extraction or modelling in "
-                 "each round. Round 3 (2026-11-12): spec revision + 4-part "
-                 "Oakville control committed BEFORE the run; the round-3 "
-                 "commit hash is recorded in the repo history "
-                 "(ROUND3_COMMIT_HASH).")
+                 "Oakville control) and `c47fbf9445a052fa46545de4e787b07033811a84` "
+                 "(round 3, pooled 4-roof Oakville control) BEFORE any "
+                 "extraction or modelling in each round. Round 4 "
+                 "(2026-11-12): spec revision + single pooled 3-roof Bronte "
+                 "control committed BEFORE the run; the round-4 commit hash "
+                 "is recorded in the repo history (<R4-HASH>).")
     lines.append("- Script: `t1b_weekend_test.py`, seed 42, 10,000 "
                  "permutations. Rerun: `python3 t1b_weekend_test.py` from the "
                  "repo root (uses only numpy, pandas, matplotlib). "
@@ -464,13 +489,17 @@ def main():
     lines.append("")
     lines.append("## Plain-language reading")
     lines.append("")
-    lines.append("The control areas are surfaces near each station that should "
-                 "not care what day of the week it is — warehouse and factory "
-                 "roofs. If the satellite or the processing itself produced a "
-                 "weekend pattern, the controls would show it too.")
+    lines.append("The control area is a pooled set of three large warehouse "
+                 "roofs near Bronte GO — surfaces that should not care what "
+                 "day of the week it is. The same control is subtracted from "
+                 "all six lots, because the three stations share the same "
+                 "satellite scenes and the roofs are the best-measured "
+                 "control surface in the region. If the satellite or the "
+                 "processing itself produced a weekend pattern, the control "
+                 "would show it too.")
     if crit1 and crit2:
-        lines.append("They do not (criterion 1), and subtracting each station's "
-                     "control from its lots leaves the weekend effect intact "
+        lines.append("It does not (criterion 1), and subtracting the Bronte "
+                     "control from the lots leaves the weekend effect intact "
                      "(criterion 2) — so the T1 weekend effect is tied to the "
                      "lots themselves, not to a weekend artefact in the data.")
     else:

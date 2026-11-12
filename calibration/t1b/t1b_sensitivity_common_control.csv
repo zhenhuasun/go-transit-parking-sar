@@ -1,0 +1,4 @@
+control,pooled_coef_dB,pooled_p,perm_p,n_neg_lots,crit2_style_pass
+Bronte GO — Control,-0.5012724060080815,0.016217241730249406,0.0174,6,False
+Clarkson GO — Control,-0.3723858721727549,0.12522155310117877,0.096,6,False
+Oakville GO — Control,-0.22609289357447881,0.30716029449811133,0.1697,6,False

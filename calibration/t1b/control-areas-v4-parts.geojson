@@ -1,0 +1,127 @@
+{
+ "type": "FeatureCollection",
+ "name": "go-parking-control-areas-t1b-r4-parts",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "control-bronte-roof-1",
+    "name": "Bronte GO \u2014 Control roof 1",
+    "status": "user-drawn"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -79.727703,
+       43.410474
+      ],
+      [
+       -79.728464,
+       43.409725
+      ],
+      [
+       -79.72678,
+       43.408809
+      ],
+      [
+       -79.726024,
+       43.409546
+      ],
+      [
+       -79.727703,
+       43.410474
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "control-bronte-roof-2",
+    "name": "Bronte GO \u2014 Control roof 2",
+    "status": "user-drawn"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -79.727928,
+       43.414866
+      ],
+      [
+       -79.72718,
+       43.414316
+      ],
+      [
+       -79.72789,
+       43.413813
+      ],
+      [
+       -79.728156,
+       43.413991
+      ],
+      [
+       -79.728253,
+       43.413917
+      ],
+      [
+       -79.728867,
+       43.414363
+      ],
+      [
+       -79.728236,
+       43.41481
+      ],
+      [
+       -79.728116,
+       43.414722
+      ],
+      [
+       -79.727928,
+       43.414866
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "control-bronte-roof-3",
+    "name": "Bronte GO \u2014 Control roof 3",
+    "status": "user-drawn"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -79.7231,
+       43.414989
+      ],
+      [
+       -79.722322,
+       43.414556
+      ],
+      [
+       -79.724457,
+       43.412532
+      ],
+      [
+       -79.725219,
+       43.412961
+      ],
+      [
+       -79.7231,
+       43.414989
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}
