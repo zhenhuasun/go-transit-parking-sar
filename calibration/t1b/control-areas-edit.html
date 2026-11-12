@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draw Control Areas — GO Parking SAR (T1b)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<style>
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#222}
+  header{padding:14px 16px 10px;background:#fff3e0;border-bottom:2px solid #ef6c00}
+  header h1{font-size:18px;margin:0 0 6px}
+  header p, header li{margin:4px 0;font-size:14px;line-height:1.55}
+  #map{height:60vh;min-height:420px}
+  .btns{padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap}
+  button{padding:9px 13px;font-size:14px;border:1px solid #555;border-radius:8px;background:#fff;cursor:pointer}
+  button.primary{background:#ef6c00;color:#fff;border-color:#c85a00;font-weight:600}
+  button:hover{filter:brightness(0.95)}
+  textarea{width:calc(100% - 32px);margin:0 16px 8px;height:140px;font-family:monospace;font-size:12px}
+  .note{margin:0 16px 20px;font-size:13px;color:#555;line-height:1.5}
+  table{border-collapse:collapse;margin:0 16px 16px;font-size:13px;width:calc(100% - 32px)}
+  th,td{border:1px solid #ccc;padding:6px 8px;text-align:left;vertical-align:top}
+  th{background:#f2f2f2}
+</style>
+</head>
+<body>
+<header>
+  <h1>Draw Control Areas — GO Parking SAR (T1b, round 3: multiple Oakville roofs)</h1>
+  <p>Draw control areas — <b>one polygon for Clarkson, one for Bronte, and one to three rooftops for Oakville</b>. The Oakville rooftops will be <b>pooled into a single Oakville control</b> when you export (one MultiPolygon), so no single roof can sink the test on its own. Each must be a surface with <b>no parked cars</b>, to check whether the weekend effect we found is real or just something the satellite does on weekends. The 6 parking lots are shown in <b style="color:#1565c0">blue</b> for reference (you cannot edit them); the dashed grey circles are <b>500 m around each lot</b> — a guide, not a rule: Oakville roofs may lie farther out as long as they are nearby.</p>
+  <ol>
+    <li><b>Oakville — draw 1–3 rooftops</b> (each its own polygon). Aim for a <b>pooled total of at least ~10,000 m&sup2;</b>. Trace each roof <b>10–15 m inside its edge</b>, so no radar pixel touches the ground, loading dock, or truck court around the building. The popup shows the area as you draw.</li>
+    <li><b>What counts:</b> a large, flat, empty rooftop. <b>What to avoid:</b> parking lots, garages, roads, rail tracks, trees, water — and on the roof itself: <b>HVAC units, solar panels, rooftop parking, or stored materials</b>. The roof must have been <b>unchanged from 2018 to 2026</b> — no re-roof, no new units, no panels added (check the historical imagery).</li>
+    <li><b>Draw:</b> click the polygon button at the top left of the map, click along the edge of the roof (inset from the real edge), and click the first point again to close it. Name it, e.g. <i>Oakville GO — Control roof 1</i>, then draw the next roof as <i>roof 2</i>.</li>
+    <li><b>Delete the old Oakville roof first:</b> your previous Oakville control (7,232 m&sup2;, the one that failed round 2) is still saved in this browser — use “Clear Oakville only” below before drawing the new roofs, or delete it with the 🗑️ Delete tool.</li>
+    <li><b>Edit / delete:</b> use the ✏️ Edit and 🗑️ Delete buttons at the top left, then click Save.</li>
+    <li><b>Export:</b> when Oakville has 1–3 roofs and Clarkson/Bronte have 1 polygon each, click “Export GeoJSON” below, then “Copy” or “Download .geojson”, and send the file / text back to me. The export pools the Oakville roofs into one control area.</li>
+  </ol>
+  <p>Your edits are saved automatically in this browser (localStorage) and will still be here next time you open this page. You can also draw on a phone, but the corner points are small — <b>do fine editing on a computer and use the phone for rough checks only</b>. Zoom to the maximum (z 18–19) before tracing.</p>
+  <p>The <b style="color:#2e7d32">green dashed outlines</b> are the 20 largest roofs near Oakville GO from a map scan — click one for its area and distance, then trace the ones you pick. <b style="color:#b71c1c">Red outlines are flagged do-not-pick</b> (the roof that failed round 2, and the GO parking structure).</p>
+</header>
+<div id="map"></div>
+<div class="btns">
+  <button onclick="fly(43.454,-79.684,17)">Oakville GO</button>
+  <button onclick="fly(43.512,-79.634,17)">Clarkson GO</button>
+  <button onclick="fly(43.417,-79.722,17)">Bronte GO</button>
+  <button onclick="fly(43.465,-79.68,11)">All three stations</button>
+  <button class="primary" onclick="updateExport()">Export GeoJSON</button>
+  <button onclick="copyGeoJSON()">Copy GeoJSON</button>
+  <button onclick="downloadGeoJSON()">Download .geojson</button>
+  <button onclick="clearOakville()">Clear Oakville only</button>
+  <button onclick="resetDraft()">Clear my control areas</button>
+</div>
+<textarea id="out" readonly placeholder="After clicking “Export GeoJSON”, the GeoJSON you drew will appear here."></textarea>
+<p class="note">Send it back to me any one of these ways: 1) send the downloaded .geojson file directly; 2) click “Copy GeoJSON” and paste it to me. I will then add a round-3 revision to the T1b specification, commit it first, and only then run the control-area test — the spec is written after seeing the round-2 result, and it will say so.</p>
+<div id="summary" class="note"></div>
+<script>
+var map = L.map('map').setView([43.465,-79.68], 11);
+var sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, attribution:'Esri World Imagery'});
+var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'© OpenStreetMap'});
+sat.addTo(map);
+var layerCtl = L.control.layers({"Satellite":sat,"Streets":osm}).addTo(map);
+function fly(lat,lon,z){ map.flyTo([lat,lon], z); }
+// Reference: the 6 parking lots (read-only, blue) — embedded from polygons-user.geojson
+var LOTS = [
+ {
+  "id": "oakville-main",
+  "name": "Oakville GO \u2014 Main Lot",
+  "spaces": 2712,
+  "pts": [
+   [
+    43.45478,
+    -79.68282
+   ],
+   [
+    43.45171,
+    -79.68604
+   ],
+   [
+    43.45193,
+    -79.68644
+   ],
+   [
+    43.45211,
+    -79.68667
+   ],
+   [
+    43.45252,
+    -79.68681
+   ],
+   [
+    43.45296,
+    -79.68711
+   ],
+   [
+    43.45318,
+    -79.68701
+   ],
+   [
+    43.45331,
+    -79.68687
+   ],
+   [
+    43.45335,
+    -79.68693
+   ],
+   [
+    43.45351,
+    -79.68664
+   ],
+   [
+    43.45341,
+    -79.68629
+   ],
+   [
+    43.45442,
+    -79.68519
+   ],
+   [
+    43.45394,
+    -79.68459
+   ],
+   [
+    43.45409,
+    -79.68444
+   ],
+   [
+    43.45477,
+    -79.68537
+   ],
+   [
+    43.45574,
+    -79.68434
+   ],
+   [
+    43.45616,
+    -79.68374
+   ],
+   [
+    43.45642,
+    -79.68348
+   ],
+   [
+    43.45664,
+    -79.68304
+   ],
+   [
+    43.45613,
+    -79.68235
+   ],
+   [
+    43.45562,
+    -79.68293
+   ],
+   [
+    43.45553,
+    -79.68275
+   ],
+   [
+    43.45503,
+    -79.68327
+   ],
+   [
+    43.45478,
+    -79.68282
+   ]
+  ]
+ },
+ {
+  "id": "oakville-south",
+  "name": "Oakville GO \u2014 South Lot",
+  "spaces": 291,
+  "pts": [
+   [
+    43.45332,
+    -79.68265
+   ],
+   [
+    43.45322,
+    -79.68297
+   ],
+   [
+    43.45325,
+    -79.68317
+   ],
+   [
+    43.4534,
+    -79.68316
+   ],
+   [
+    43.45343,
+    -79.68348
+   ],
+   [
+    43.45346,
+    -79.68354
+   ],
+   [
+    43.45333,
+    -79.6837
+   ],
+   [
+    43.45336,
+    -79.68378
+   ],
+   [
+    43.45377,
+    -79.68333
+   ],
+   [
+    43.45419,
+    -79.6829
+   ],
+   [
+    43.45415,
+    -79.68285
+   ],
+   [
+    43.4543,
+    -79.68269
+   ],
+   [
+    43.45393,
+    -79.682
+   ],
+   [
+    43.45332,
+    -79.68265
+   ]
+  ]
+ },
+ {
+  "id": "clarkson-main",
+  "name": "Clarkson GO \u2014 Main Lot",
+  "spaces": 1274,
+  "pts": [
+   [
+    43.51174,
+    -79.63219
+   ],
+   [
+    43.51136,
+    -79.63169
+   ],
+   [
+    43.51043,
+    -79.63272
+   ],
+   [
+    43.51069,
+    -79.6331
+   ],
+   [
+    43.50987,
+    -79.63397
+   ],
+   [
+    43.51038,
+    -79.63416
+   ],
+   [
+    43.51055,
+    -79.63444
+   ],
+   [
+    43.51111,
+    -79.63384
+   ],
+   [
+    43.51167,
+    -79.63473
+   ],
+   [
+    43.51181,
+    -79.63458
+   ],
+   [
+    43.51188,
+    -79.63468
+   ],
+   [
+    43.51226,
+    -79.63423
+   ],
+   [
+    43.51208,
+    -79.63393
+   ],
+   [
+    43.51237,
+    -79.63362
+   ],
+   [
+    43.51207,
+    -79.63311
+   ],
+   [
+    43.51206,
+    -79.63254
+   ],
+   [
+    43.51221,
+    -79.6319
+   ],
+   [
+    43.51207,
+    -79.63171
+   ],
+   [
+    43.51174,
+    -79.63219
+   ]
+  ]
+ },
+ {
+  "id": "clarkson-north",
+  "name": "Clarkson GO \u2014 North Lot",
+  "spaces": 627,
+  "pts": [
+   [
+    43.51348,
+    -79.63474
+   ],
+   [
+    43.51326,
+    -79.63598
+   ],
+   [
+    43.51311,
+    -79.63656
+   ],
+   [
+    43.5131,
+    -79.63717
+   ],
+   [
+    43.51384,
+    -79.63671
+   ],
+   [
+    43.51409,
+    -79.63638
+   ],
+   [
+    43.51425,
+    -79.63603
+   ],
+   [
+    43.5145,
+    -79.63488
+   ],
+   [
+    43.51375,
+    -79.6339
+   ],
+   [
+    43.51346,
+    -79.63434
+   ],
+   [
+    43.5132,
+    -79.63396
+   ],
+   [
+    43.51215,
+    -79.63513
+   ],
+   [
+    43.51288,
+    -79.63605
+   ],
+   [
+    43.51307,
+    -79.63543
+   ],
+   [
+    43.5132,
+    -79.6349
+   ],
+   [
+    43.51316,
+    -79.63461
+   ],
+   [
+    43.51305,
+    -79.63439
+   ],
+   [
+    43.5132,
+    -79.63418
+   ],
+   [
+    43.51348,
+    -79.63474
+   ]
+  ]
+ },
+ {
+  "id": "bronte-main",
+  "name": "Bronte GO \u2014 Main / East Lot",
+  "spaces": 1824,
+  "pts": [
+   [
+    43.41756,
+    -79.72175
+   ],
+   [
+    43.41761,
+    -79.72185
+   ],
+   [
+    43.41765,
+    -79.72195
+   ],
+   [
+    43.41784,
+    -79.72228
+   ],
+   [
+    43.4173,
+    -79.72287
+   ],
+   [
+    43.41699,
+    -79.72235
+   ],
+   [
+    43.41587,
+    -79.72351
+   ],
+   [
+    43.41642,
+    -79.72406
+   ],
+   [
+    43.41692,
+    -79.72462
+   ],
+   [
+    43.41704,
+    -79.72449
+   ],
+   [
+    43.41713,
+    -79.72468
+   ],
+   [
+    43.41699,
+    -79.72484
+   ],
+   [
+    43.41761,
+    -79.72599
+   ],
+   [
+    43.41867,
+    -79.72489
+   ],
+   [
+    43.41749,
+    -79.72278
+   ],
+   [
+    43.41885,
+    -79.72129
+   ],
+   [
+    43.42003,
+    -79.72348
+   ],
+   [
+    43.4205,
+    -79.72299
+   ],
+   [
+    43.41897,
+    -79.72093
+   ],
+   [
+    43.41849,
+    -79.72152
+   ],
+   [
+    43.41821,
+    -79.72107
+   ],
+   [
+    43.41756,
+    -79.72175
+   ]
+  ]
+ },
+ {
+  "id": "bronte-south",
+  "name": "Bronte GO \u2014 South Lot",
+  "spaces": 1149,
+  "pts": [
+   [
+    43.41468,
+    -79.72213
+   ],
+   [
+    43.41536,
+    -79.72335
+   ],
+   [
+    43.41714,
+    -79.72152
+   ],
+   [
+    43.41637,
+    -79.72012
+   ],
+   [
+    43.41546,
+    -79.72113
+   ],
+   [
+    43.41567,
+    -79.72171
+   ],
+   [
+    43.41607,
+    -79.72243
+   ],
+   [
+    43.41571,
+    -79.72283
+   ],
+   [
+    43.41557,
+    -79.72253
+   ],
+   [
+    43.41585,
+    -79.72228
+   ],
+   [
+    43.41526,
+    -79.72125
+   ],
+   [
+    43.41466,
+    -79.72189
+   ],
+   [
+    43.41468,
+    -79.72213
+   ]
+  ]
+ }
+];
+var refLayer = new L.FeatureGroup();
+map.addLayer(refLayer);
+LOTS.forEach(function(l){
+  var poly = L.polygon(l.pts, {color:'#1565c0', weight:2, fillColor:'#1565c0', fillOpacity:0.15});
+  poly.bindPopup('<b>'+l.name+'</b><br>Parking lot ('+l.spaces+' spaces) — reference only, not editable.');
+  poly.bindTooltip(l.name);
+  refLayer.addLayer(poly);
+  // 500 m guide circle around the lot centroid
+  var clat = l.pts.reduce(function(s,p){return s+p[0];},0)/l.pts.length;
+  var clon = l.pts.reduce(function(s,p){return s+p[1];},0)/l.pts.length;
+  L.circle([clat,clon], {radius:500, color:'#777', weight:1, dashArray:'6 6', fill:false}).addTo(refLayer);
+});
+// Candidate roofs from the OSM scan (20 largest near Oakville GO) — green dashed, reference only
+var CANDS = [
+ {n:1, name:'Oakville Place', building:'retail', area:27820, inset:18138, dist:824, warn:'', pts:[[43.46053, -79.68697], [43.46045, -79.68697], [43.46019, -79.68708], [43.46029, -79.68749], [43.46035, -79.68761], [43.46022, -79.68785], [43.46029, -79.68812], [43.46046, -79.68805], [43.46074, -79.68793], [43.46073, -79.68790], [43.46074, -79.68789], [43.46077, -79.68791], [43.46101, -79.68781], [43.46100, -79.68777], [43.46164, -79.68749], [43.46165, -79.68754], [43.46166, -79.68759], [43.46174, -79.68756], [43.46175, -79.68760], [43.46180, -79.68758], [43.46210, -79.68744], [43.46229, -79.68735], [43.46228, -79.68726], [43.46251, -79.68717], [43.46261, -79.68723], [43.46287, -79.68711], [43.46274, -79.68655], [43.46268, -79.68645], [43.46263, -79.68622], [43.46253, -79.68606], [43.46236, -79.68613], [43.46227, -79.68613], [43.46204, -79.68623], [43.46205, -79.68629], [43.46167, -79.68646], [43.46165, -79.68635], [43.46167, -79.68630], [43.46173, -79.68627], [43.46174, -79.68623], [43.46185, -79.68619], [43.46182, -79.68605], [43.46177, -79.68600], [43.46164, -79.68592], [43.46152, -79.68589], [43.46144, -79.68589], [43.46133, -79.68592], [43.46130, -79.68594], [43.46126, -79.68597], [43.46119, -79.68602], [43.46110, -79.68614], [43.46106, -79.68623], [43.46103, -79.68633], [43.46100, -79.68641], [43.46101, -79.68650], [43.46098, -79.68655], [43.46097, -79.68658], [43.46112, -79.68651], [43.46115, -79.68652], [43.46120, -79.68650], [43.46125, -79.68653], [43.46127, -79.68664], [43.46099, -79.68676], [43.46079, -79.68685], [43.46077, -79.68679], [43.46067, -79.68683], [43.46065, -79.68688], [43.46056, -79.68692], [43.46053, -79.68697]]},
+ {n:2, name:'Unnamed roof', building:'yes', area:23754, inset:16641, dist:2061, warn:'', pts:[[43.43921, -79.70006], [43.43878, -79.70063], [43.43996, -79.70221], [43.44011, -79.70199], [43.44022, -79.70200], [43.44039, -79.70222], [43.44047, -79.70214], [43.44062, -79.70196], [43.44086, -79.70162], [43.44082, -79.70157], [43.44084, -79.70153], [43.44069, -79.70137], [43.44077, -79.70126], [43.44071, -79.70116], [43.44076, -79.70110], [43.43997, -79.70002], [43.43991, -79.70002], [43.43991, -79.69995], [43.43979, -79.69978], [43.43957, -79.70005], [43.43965, -79.70017], [43.43946, -79.70041], [43.43921, -79.70006]]},
+ {n:3, name:'Unnamed roof', building:'industrial', area:17924, inset:11995, dist:2466, warn:'', pts:[[43.47675, -79.67782], [43.47615, -79.67823], [43.47624, -79.67850], [43.47561, -79.67892], [43.47551, -79.67899], [43.47544, -79.67904], [43.47495, -79.67766], [43.47524, -79.67747], [43.47528, -79.67758], [43.47624, -79.67694], [43.47630, -79.67711], [43.47646, -79.67700], [43.47675, -79.67782]]},
+ {n:4, name:'Dana Oakville Research & Development Centre', building:'industrial', area:12825, inset:8063, dist:878, warn:'', pts:[[43.44878, -79.69182], [43.44842, -79.69214], [43.44815, -79.69239], [43.44786, -79.69265], [43.44737, -79.69163], [43.44795, -79.69110], [43.44787, -79.69092], [43.44820, -79.69062], [43.44878, -79.69182]]},
+ {n:5, name:'The Home Depot', building:'retail', area:12044, inset:6855, dist:303, warn:'', pts:[[43.45553, -79.68897], [43.45544, -79.68882], [43.45554, -79.68872], [43.45543, -79.68852], [43.45530, -79.68866], [43.45515, -79.68840], [43.45520, -79.68835], [43.45489, -79.68781], [43.45484, -79.68787], [43.45462, -79.68747], [43.45442, -79.68768], [43.45452, -79.68785], [43.45429, -79.68809], [43.45417, -79.68821], [43.45494, -79.68959], [43.45553, -79.68897]]},
+ {n:6, name:'Unnamed roof', building:'yes', area:9116, inset:5050, dist:1637, warn:'Overlaps a parking area in OSM — skip.', pts:[[43.46796, -79.68966], [43.46820, -79.69008], [43.46818, -79.69011], [43.46841, -79.69050], [43.46893, -79.68990], [43.46920, -79.68958], [43.46884, -79.68897], [43.46873, -79.68909], [43.46864, -79.68893], [43.46824, -79.68940], [43.46819, -79.68932], [43.46793, -79.68962], [43.46796, -79.68966]]},
+ {n:7, name:'Canadian Tire', building:'retail', area:9074, inset:5129, dist:1237, warn:'', pts:[[43.45036, -79.69949], [43.45035, -79.69849], [43.44931, -79.69851], [43.44931, -79.69895], [43.44926, -79.69895], [43.44919, -79.69895], [43.44919, -79.69904], [43.44931, -79.69925], [43.44947, -79.69939], [43.44978, -79.69948], [43.45036, -79.69949]]},
+ {n:8, name:'Unnamed roof', building:'retail', area:8987, inset:3784, dist:1372, warn:'', pts:[[43.45038, -79.70132], [43.45021, -79.70154], [43.45015, -79.70147], [43.45006, -79.70158], [43.44960, -79.70101], [43.44944, -79.70080], [43.44927, -79.70062], [43.44878, -79.70053], [43.44886, -79.69972], [43.44900, -79.69973], [43.44901, -79.69962], [43.44906, -79.69963], [43.44963, -79.70043], [43.44979, -79.70065], [43.44983, -79.70061], [43.45038, -79.70132]]},
+ {n:9, name:'Unnamed roof', building:'school', area:8934, inset:3119, dist:1702, warn:'Overlaps a parking area in OSM — skip.', pts:[[43.46363, -79.70224], [43.46349, -79.70269], [43.46308, -79.70248], [43.46309, -79.70244], [43.46292, -79.70236], [43.46309, -79.70183], [43.46317, -79.70159], [43.46294, -79.70139], [43.46298, -79.70128], [43.46298, -79.70126], [43.46300, -79.70121], [43.46309, -79.70100], [43.46310, -79.70096], [43.46346, -79.70116], [43.46337, -79.70149], [43.46362, -79.70163], [43.46385, -79.70108], [43.46412, -79.70123], [43.46390, -79.70195], [43.46372, -79.70184], [43.46362, -79.70177], [43.46349, -79.70215], [43.46363, -79.70224]]},
+ {n:10, name:'Unnamed roof', building:'yes', area:8569, inset:3070, dist:2500, warn:'', pts:[[43.43664, -79.70306], [43.43694, -79.70360], [43.43667, -79.70388], [43.43638, -79.70333], [43.43578, -79.70395], [43.43613, -79.70459], [43.43645, -79.70425], [43.43656, -79.70444], [43.43722, -79.70375], [43.43677, -79.70293], [43.43664, -79.70306]]},
+ {n:11, name:'Unnamed roof', building:'industrial', area:8309, inset:4063, dist:1090, warn:'DO NOT PICK — this is the roof that failed round 2 (7,232 m² drawn area).', pts:[[43.44457, -79.68975], [43.44501, -79.69035], [43.44495, -79.69043], [43.44506, -79.69059], [43.44513, -79.69048], [43.44552, -79.69101], [43.44586, -79.69053], [43.44493, -79.68925], [43.44457, -79.68975]]},
+ {n:12, name:'Budd\'s Imported Cars', building:'yes', area:8293, inset:4324, dist:1176, warn:'', pts:[[43.44838, -79.69667], [43.44760, -79.69560], [43.44711, -79.69627], [43.44747, -79.69676], [43.44757, -79.69663], [43.44799, -79.69720], [43.44838, -79.69667]]},
+ {n:13, name:'Oakville Town Hall', building:'yes', area:8237, inset:1928, dist:1472, warn:'', pts:[[43.46736, -79.68829], [43.46747, -79.68813], [43.46752, -79.68819], [43.46754, -79.68815], [43.46750, -79.68809], [43.46752, -79.68807], [43.46752, -79.68798], [43.46747, -79.68792], [43.46746, -79.68791], [43.46746, -79.68787], [43.46753, -79.68778], [43.46757, -79.68784], [43.46756, -79.68786], [43.46755, -79.68792], [43.46756, -79.68798], [43.46764, -79.68798], [43.46771, -79.68809], [43.46774, -79.68806], [43.46767, -79.68797], [43.46768, -79.68796], [43.46770, -79.68799], [43.46784, -79.68779], [43.46783, -79.68778], [43.46786, -79.68774], [43.46790, -79.68779], [43.46798, -79.68768], [43.46781, -79.68745], [43.46783, -79.68743], [43.46777, -79.68735], [43.46774, -79.68741], [43.46772, -79.68739], [43.46773, -79.68737], [43.46767, -79.68728], [43.46766, -79.68730], [43.46764, -79.68727], [43.46761, -79.68732], [43.46754, -79.68722], [43.46755, -79.68721], [43.46757, -79.68723], [43.46765, -79.68712], [43.46759, -79.68703], [43.46759, -79.68703], [43.46758, -79.68700], [43.46760, -79.68697], [43.46761, -79.68699], [43.46762, -79.68697], [43.46761, -79.68696], [43.46763, -79.68694], [43.46751, -79.68678], [43.46746, -79.68685], [43.46744, -79.68687], [43.46755, -79.68703], [43.46756, -79.68703], [43.46762, -79.68712], [43.46759, -79.68716], [43.46741, -79.68691], [43.46733, -79.68702], [43.46731, -79.68699], [43.46729, -79.68699], [43.46726, -79.68699], [43.46724, -79.68702], [43.46721, -79.68697], [43.46717, -79.68697], [43.46714, -79.68701], [43.46710, -79.68696], [43.46708, -79.68700], [43.46711, -79.68704], [43.46691, -79.68733], [43.46687, -79.68728], [43.46684, -79.68731], [43.46688, -79.68736], [43.46673, -79.68757], [43.46673, -79.68762], [43.46686, -79.68780], [43.46696, -79.68780], [43.46700, -79.68775], [43.46701, -79.68776], [43.46700, -79.68776], [43.46702, -79.68779], [43.46703, -79.68781], [43.46704, -79.68780], [43.46705, -79.68781], [43.46706, -79.68780], [43.46706, -79.68789], [43.46718, -79.68806], [43.46718, -79.68806], [43.46715, -79.68811], [43.46720, -79.68818], [43.46724, -79.68813], [43.46724, -79.68814], [43.46724, -79.68823], [43.46729, -79.68829], [43.46736, -79.68829]]},
+ {n:14, name:'Unnamed roof', building:'industrial', area:8207, inset:4583, dist:1163, warn:'', pts:[[43.44651, -79.69365], [43.44594, -79.69444], [43.44535, -79.69364], [43.44592, -79.69285], [43.44651, -79.69365]]},
+ {n:15, name:'Unnamed roof', building:'retail', area:8196, inset:3241, dist:921, warn:'', pts:[[43.44591, -79.68852], [43.44600, -79.68867], [43.44597, -79.68870], [43.44604, -79.68881], [43.44606, -79.68878], [43.44619, -79.68900], [43.44616, -79.68903], [43.44656, -79.68972], [43.44676, -79.68951], [43.44712, -79.69014], [43.44728, -79.68997], [43.44684, -79.68922], [43.44690, -79.68915], [43.44629, -79.68810], [43.44591, -79.68852]]},
+ {n:16, name:'Unnamed roof', building:'industrial', area:8106, inset:4308, dist:1354, warn:'', pts:[[43.46589, -79.68465], [43.46646, -79.68547], [43.46699, -79.68474], [43.46630, -79.68380], [43.46605, -79.68414], [43.46616, -79.68429], [43.46589, -79.68465]]},
+ {n:17, name:'Unnamed roof', building:'school', area:7780, inset:3675, dist:2154, warn:'', pts:[[43.43564, -79.68026], [43.43549, -79.68053], [43.43546, -79.68059], [43.43552, -79.68064], [43.43552, -79.68073], [43.43552, -79.68080], [43.43535, -79.68107], [43.43527, -79.68098], [43.43500, -79.68144], [43.43467, -79.68114], [43.43471, -79.68109], [43.43461, -79.68097], [43.43472, -79.68078], [43.43465, -79.68072], [43.43493, -79.68022], [43.43497, -79.68026], [43.43501, -79.68019], [43.43507, -79.68022], [43.43526, -79.67987], [43.43533, -79.67995], [43.43537, -79.67989], [43.43554, -79.68000], [43.43551, -79.68004], [43.43555, -79.68006], [43.43552, -79.68012], [43.43564, -79.68026]]},
+ {n:18, name:'Unnamed roof', building:'yes', area:7706, inset:3102, dist:1261, warn:'', pts:[[43.46477, -79.68194], [43.46480, -79.68199], [43.46484, -79.68199], [43.46485, -79.68229], [43.46499, -79.68212], [43.46518, -79.68239], [43.46509, -79.68249], [43.46520, -79.68265], [43.46528, -79.68254], [43.46538, -79.68268], [43.46545, -79.68258], [43.46561, -79.68283], [43.46602, -79.68226], [43.46544, -79.68152], [43.46534, -79.68165], [43.46520, -79.68144], [43.46503, -79.68166], [43.46512, -79.68180], [43.46508, -79.68185], [43.46480, -79.68186], [43.46477, -79.68194]]},
+ {n:19, name:'Oakville GO Parking Structure', building:'garage', area:7522, inset:3707, dist:269, warn:'DO NOT PICK — parking structure, rooftop parking.', pts:[[43.45452, -79.68246], [43.45445, -79.68233], [43.45443, -79.68229], [43.45442, -79.68227], [43.45437, -79.68219], [43.45422, -79.68191], [43.45519, -79.68090], [43.45544, -79.68134], [43.45547, -79.68140], [43.45550, -79.68145], [43.45537, -79.68158], [43.45452, -79.68246]]},
+ {n:20, name:'Unnamed roof', building:'yes', area:7435, inset:2270, dist:2249, warn:'', pts:[[43.43946, -79.70338], [43.43910, -79.70289], [43.43901, -79.70302], [43.43891, -79.70288], [43.43898, -79.70278], [43.43877, -79.70249], [43.43881, -79.70244], [43.43874, -79.70234], [43.43865, -79.70247], [43.43852, -79.70229], [43.43861, -79.70216], [43.43831, -79.70175], [43.43802, -79.70216], [43.43919, -79.70375], [43.43946, -79.70338]]},
+];
+var candLayer = new L.FeatureGroup();
+CANDS.forEach(function(c){
+  var poly = L.polygon(c.pts, {color: c.warn ? '#b71c1c' : '#2e7d32', weight:2, dashArray:'5 4', fillColor: c.warn ? '#b71c1c' : '#2e7d32', fillOpacity:0.08});
+  poly.bindPopup('<b>#'+c.n+' '+c.name+'</b> ('+c.building+')<br>'+c.area.toLocaleString()+' m², inset 10 m: '+c.inset.toLocaleString()+' m²<br>'+c.dist.toLocaleString()+' m from Oakville GO'+(c.warn?'<br><b style="color:#b71c1c">'+c.warn+'</b>':''));
+  poly.bindTooltip('#'+c.n+' '+c.name);
+  candLayer.addLayer(poly);
+});
+candLayer.addTo(map);
+layerCtl.addOverlay(candLayer, 'Candidate roofs (20)');
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+function areaM2(layer){
+  try{
+    var latlngs = layer.getLatLngs()[0];
+    return Math.round(L.GeometryUtil.geodesicArea(latlngs));
+  }catch(e){ return null; }
+}
+function styleControl(){
+  return {color:'#ef6c00', weight:3, fillColor:'#ef6c00', fillOpacity:0.25};
+}
+function loadSaved(){
+  try{
+    var raw = localStorage.getItem('go-parking-control-areas-v1');
+    if(!raw) return false;
+    var gj = JSON.parse(raw);
+    if(!gj.features || !gj.features.length) return false;
+    drawnItems.clearLayers();
+    L.geoJSON(gj, {style:styleControl,
+      onEachFeature:function(f, layer){
+        layer.feature = f;
+        var p = f.properties || {};
+        var a = areaM2(layer);
+        layer.bindPopup('<b>'+(p.name||'Unnamed')+'</b><br>Control area'+(a!==null?' — '+a.toLocaleString()+' m²':''));
+        layer.bindTooltip(p.name||'Unnamed');
+      }}).addTo(drawnItems);
+    return true;
+  }catch(e){ return false; }
+}
+loadSaved();
+var drawControl = new L.Control.Draw({
+  edit:{featureGroup:drawnItems},
+  draw:{polygon:{allowIntersection:false, showArea:true, shapeOptions:{color:'#ef6c00', weight:3, fillOpacity:0.25}},
+    marker:false, polyline:false, rectangle:false, circle:false, circlemarker:false}
+});
+map.addControl(drawControl);
+map.on(L.Draw.Event.CREATED, function(e){
+  var layer = e.layer;
+  var name = prompt('Which station is this for? Oakville: you can draw several roofs — name them e.g. "Oakville GO — Control roof 1", then "roof 2".', 'Oakville GO — Control roof 1');
+  layer.feature = {type:'Feature', properties:{id:'control-'+Date.now(), name:name||'New Control', status:'user-drawn', color:'#ef6c00'}};
+  var a = areaM2(layer);
+  layer.bindPopup('<b>'+(name||'New Control')+'</b><br>Control area'+(a!==null?' — '+a.toLocaleString()+' m²':''));
+  layer.bindTooltip(name||'New Control');
+  drawnItems.addLayer(layer);
+  updateExport();
+});
+map.on(L.Draw.Event.EDITED, updateExport);
+map.on(L.Draw.Event.DELETED, updateExport);
+function stationOf(name){
+  var n = (name||'').toLowerCase();
+  if (n.indexOf('oakville')===0) return 'Oakville';
+  if (n.indexOf('clarkson')===0) return 'Clarkson';
+  if (n.indexOf('bronte')===0) return 'Bronte';
+  return 'Other';
+}
+function rawGeoJSON(){
+  var gj = drawnItems.toGeoJSON();
+  gj.name = 'go-parking-control-areas-t1b';
+  return gj;
+}
+// Export: all Oakville polygons are pooled into ONE MultiPolygon control;
+// Clarkson and Bronte pass through unchanged (one polygon each).
+function pooledGeoJSON(){
+  var gj = rawGeoJSON();
+  var oak = [], others = [];
+  gj.features.forEach(function(f){
+    var n = ((f.properties && f.properties.name) || '');
+    if (stationOf(n)==='Oakville') oak.push(f); else others.push(f);
+  });
+  var out = {type:'FeatureCollection', name:'go-parking-control-areas-t1b', features: others};
+  if (oak.length){
+    out.features.push({type:'Feature',
+      properties:{id:'control-oakville-pooled', name:'Oakville GO — Control', status:'user-drawn', color:'#ef6c00', parts: oak.length},
+      geometry:{type:'MultiPolygon', coordinates: oak.map(function(f){ return f.geometry.coordinates; })}});
+  }
+  return out;
+}
+function updateSummary(){
+  var groups = {Oakville:[], Clarkson:[], Bronte:[], Other:[]};
+  drawnItems.eachLayer(function(layer){
+    var p = (layer.feature && layer.feature.properties) || {};
+    groups[stationOf(p.name)].push({name:p.name||'Unnamed', area:areaM2(layer)});
+  });
+  var h = '<b>What you have drawn (live):</b><ul>';
+  ['Oakville','Clarkson','Bronte','Other'].forEach(function(st){
+    var list = groups[st];
+    if(!list.length){ h += '<li><b>'+st+':</b> nothing drawn yet</li>'; return; }
+    var tot = list.reduce(function(s,x){return s+(x.area||0);},0);
+    h += '<li><b>'+st+':</b> '+list.length+' polygon'+(list.length>1?'s':'')+' — '+
+      list.map(function(x){return '“'+x.name+'” ('+(x.area!==null?x.area.toLocaleString()+' m²':'?')+')';}).join(', ')+
+      (st==='Oakville' ? ' — <b>pooled total '+tot.toLocaleString()+' m²</b>' : '')+'</li>';
+  });
+  h += '</ul>';
+  var warns = [];
+  if(!groups.Oakville.length) warns.push('Oakville needs 1–3 rooftops.');
+  if(groups.Clarkson.length!==1) warns.push('Clarkson should be exactly 1 polygon (now '+groups.Clarkson.length+').');
+  if(groups.Bronte.length!==1) warns.push('Bronte should be exactly 1 polygon (now '+groups.Bronte.length+').');
+  if(groups.Other.length) warns.push(groups.Other.length+' polygon(s) are not named after a station — they will be exported as-is, not pooled into Oakville. Rename them to start with “Oakville”, “Clarkson” or “Bronte”.');
+  groups.Oakville.concat(groups.Clarkson, groups.Bronte).forEach(function(x){
+    if(x.area!==null && x.area<1000) warns.push('“'+x.name+'” is only '+x.area.toLocaleString()+' m² — very small for a control area.');
+  });
+  if(warns.length) h += '<p style="color:#b71c1c"><b>Check before exporting:</b> '+warns.join(' ')+'</p>';
+  else h += '<p style="color:#2e7d32">Looks complete — export below and send it back.</p>';
+  document.getElementById('summary').innerHTML = h;
+}
+function updateExport(){
+  var gj = pooledGeoJSON();
+  document.getElementById('out').value = JSON.stringify(gj, null, 2);
+  try{ localStorage.setItem('go-parking-control-areas-v1', JSON.stringify(rawGeoJSON())); }catch(e){}
+  updateSummary();
+}
+function copyGeoJSON(){
+  updateExport();
+  var t = document.getElementById('out');
+  t.select();
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t.value).then(function(){ alert('GeoJSON copied — just paste it to me.'); }); }
+  else { document.execCommand('copy'); alert('GeoJSON copied — just paste it to me.'); }
+}
+function downloadGeoJSON(){
+  updateExport();
+  var blob = new Blob([document.getElementById('out').value], {type:'application/json'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'go-parking-control-areas.geojson'; a.click();
+}
+function clearOakville(){
+  if(!confirm('Delete only the Oakville control polygons you drew? Clarkson and Bronte stay.')) return;
+  var remove = [];
+  drawnItems.eachLayer(function(layer){
+    var p = (layer.feature && layer.feature.properties) || {};
+    if (stationOf(p.name)==='Oakville') remove.push(layer);
+  });
+  remove.forEach(function(l){ drawnItems.removeLayer(l); });
+  updateExport();
+}
+function resetDraft(){
+  if(confirm('Clear all control areas you drew? The parking lots (blue) stay.')){ localStorage.removeItem('go-parking-control-areas-v1'); drawnItems.clearLayers(); updateExport(); }
+}
+updateExport();
+</script>
+</body>
+</html>
