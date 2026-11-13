@@ -459,14 +459,19 @@ def main():
     lines.append("")
     lines.append("## Deviations from the addendum")
     lines.append("")
-    lines.append("Two local-only edits to the run script after the round-4 "
+    lines.append("Three local-only edits to the run script after the round-4 "
                  "spec commit (the committed script differs from the run "
-                 "script only in these string constants, neither of which "
-                 "affects any model): the round-4 commit hash was inserted "
-                 "into the reproducibility note below (the hash did not exist "
-                 "when the script was written), and the per-part OSM "
-                 "coverage lines were added to the Extraction check section "
-                 "(the per-part scan finished after the spec commit).")
+                 "script only in these string constants, none of which "
+                 "affects any model): (1) the round-4 commit hash was "
+                 "inserted into the reproducibility note below (the hash did "
+                 "not exist when the script was written); (2) this Deviations "
+                 "note itself was corrected — the committed version wrongly "
+                 "said the per-part OSM coverage lines were added after the "
+                 "spec commit, but they were in fact filled in BEFORE it "
+                 "(the scan finished first); (3) the plain-language reading "
+                 "gained a third branch for the criterion-1-pass / "
+                 "criterion-2-fail split, so it no longer implies the "
+                 "controls failed when only the differenced bar was missed.")
     lines.append("")
     lines.append("## Reproducibility")
     lines.append("")
@@ -479,7 +484,7 @@ def main():
                  "extraction or modelling in each round. Round 4 "
                  "(2026-11-12): spec revision + single pooled 3-roof Bronte "
                  "control committed BEFORE the run; the round-4 commit hash "
-                 "is recorded in the repo history (<R4-HASH>).")
+                 "is recorded in the repo history (8785b15c1b505671ecfee8fb1fc2a0bdb2255617).")
     lines.append("- Script: `t1b_weekend_test.py`, seed 42, 10,000 "
                  "permutations. Rerun: `python3 t1b_weekend_test.py` from the "
                  "repo root (uses only numpy, pandas, matplotlib). "
@@ -502,6 +507,16 @@ def main():
                      "control from the lots leaves the weekend effect intact "
                      "(criterion 2) — so the T1 weekend effect is tied to the "
                      "lots themselves, not to a weekend artefact in the data.")
+    elif crit1 and not crit2:
+        lines.append("The control itself is clean — it shows no weekend "
+                     "effect (criterion 1 passed). But after subtracting it, "
+                     "the weekend effect in the lots, though negative in all "
+                     "six lots, is not strong enough to clear the pre-set bar "
+                     "(criterion 2: pooled p = 0.014, permutation p = 0.012, "
+                     "both above 0.01). So T1 stays INCONCLUSIVE: the weekend "
+                     "pattern in the lots may still be real, but this control "
+                     "check cannot rule out a non-car explanation at the "
+                     "strength the test demanded.")
     else:
         lines.append("The test did not fully confirm that (see the decision "
                      "above), so T1 is downgraded to INCONCLUSIVE: the weekend "

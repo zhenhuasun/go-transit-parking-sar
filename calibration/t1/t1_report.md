@@ -1,5 +1,43 @@
 # T1 — Weekend-effect test (pre-registered)
 
+> **Update 2026-11-12 (T1b):** the supplemental negative control
+> (`calibration/t1b/`) found a significant weekend effect in the Oakville
+> control area (−0.493 dB, p = 0.0009), so this PASS is downgraded to
+> **INCONCLUSIVE** per the pre-specified T1b fallback rule. See
+> `calibration/t1b/t1b_report.md` for the full T1b result. The numbers
+> below are unchanged; only the standing of the conclusion changed.
+>
+> **Update 2026-11-12 (T1b round 2):** the Oakville control was replaced
+> (the v1 area turned out to include a building with an active parking lot
+> before 2024) and the test re-run on the revised control set. The new
+> Oakville control — a factory/warehouse roof — shows a weekend effect of
+> its own (−0.885 dB, p = 0.0064), so T1 **stays INCONCLUSIVE**. Round 1
+> is archived as `calibration/t1b/t1b_report_round1.md`.
+>
+> **Update 2026-11-12 (T1b round 3):** the Oakville control was replaced
+> again — a pooled 4-roof control (part 2 of the user's 5-roof set was
+> dropped: 99% of it lay inside the failed round-2 roof). This time the
+> controls pass: no control shows a significant weekend effect (pooled
+> −0.071 dB, p = 0.526; Oakville pooled −0.209 dB, p = 0.164). But the
+> differenced series does not clear the bar — pooled −0.369 dB, 6/6 lots
+> negative, yet clustered p = 0.075 and permutation p = 0.062 (both need
+> < 0.01) — so T1 **stays INCONCLUSIVE**. Rounds 1–2 are archived as
+> `calibration/t1b/t1b_report_round1.md` and
+> `calibration/t1b/t1b_report_round2.md`.
+>
+> **Update 2026-11-12 (T1b round 4):** the design changed to a single
+> common control — the pooled 3-roof Bronte control (48,071 m²) subtracted
+> from all 6 lots — after an exploratory check found the Bronte-only
+> variant strongest. The control is clean (pooled +0.035 dB, p = 0.697;
+> each roof individually clean: +0.024, −0.190, +0.129 dB, all p > 0.25),
+> and the differenced series is the strongest yet — pooled −0.476 dB, 6/6
+> lots negative — but still short of the bar: clustered p = 0.014 and
+> permutation p = 0.012 (both need < 0.01). So T1 **stays INCONCLUSIVE**
+> (4th time). Rounds 1–3 are archived as
+> `calibration/t1b/t1b_report_round1.md`,
+> `calibration/t1b/t1b_report_round2.md`, and
+> `calibration/t1b/t1b_report_round3.md`.
+
 **Hypothesis (H1):** mean VV is lower on weekends/holidays than on weekdays within the same lot (fewer cars at ~19:10). Direction pre-specified: weekend effect < 0.
 
 **Decision: PASS**
